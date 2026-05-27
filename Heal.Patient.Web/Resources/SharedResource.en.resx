@@ -116,4 +116,76 @@
   <data name="Dados armazenados pelo período aplicável com controles técnicos de segurança." xml:space="preserve"><value>Data is retained for required periods with technical safeguards in place.</value></data>
   <data name="6. Direitos do titular" xml:space="preserve"><value>6. Data subject rights</value></data>
   <data name="O titular pode exercer direitos previstos na LGPD pelos canais oficiais da clínica." xml:space="preserve"><value>Patients may exercise their legal rights through official clinic channels.</value></data>
+
+  <data name="Você pode acessar por número de protocolo ou, se preferir, por CPF e código." xml:space="preserve"><value>You can access using protocol number or, if you prefer, CPF and code.</value></data>
+  <data name="Se não encontrar seu exame, toque em Ajuda." xml:space="preserve"><value>If you cannot find your exam, tap Help.</value></data>
+  <data name="Pular para o conteúdo principal" xml:space="preserve"><value>Skip to main content</value></data>
+  <data name="Navegação principal" xml:space="preserve"><value>Main navigation</value></data>
+  <data name="Abrir menu" xml:space="preserve"><value>Open menu</value></data>
+  <data name="Ajuste de fonte" xml:space="preserve"><value>Font adjustment</value></data>
+  <data name="Diminuir fonte" xml:space="preserve"><value>Decrease font size</value></data>
+  <data name="Aumentar fonte" xml:space="preserve"><value>Increase font size</value></data>
+  <data name="Idioma atual" xml:space="preserve"><value>Current language</value></data>
+  <data name="Confira o status abaixo para saber o próximo passo em cada exame." xml:space="preserve"><value>Check the status below to know the next step for each exam.</value></data>
+  <data name="ID do paciente" xml:space="preserve"><value>Patient ID</value></data>
+  <data name="Mais recentes" xml:space="preserve"><value>Most recent</value></data>
+  <data name="Anteriores" xml:space="preserve"><value>Previous</value></data>
+  <data name="Pronto para laudo" xml:space="preserve"><value>Report ready</value></data>
+  <data name="Imagens disponíveis" xml:space="preserve"><value>Images available</value></data>
+  <data name="Em processamento" xml:space="preserve"><value>Processing</value></data>
+  <data name="Laudo pronto para visualização e download em PDF." xml:space="preserve"><value>Report ready for viewing and PDF download.</value></data>
+  <data name="Imagens prontas para visualização e impressão." xml:space="preserve"><value>Images ready for viewing and printing.</value></data>
+  <data name="Estamos finalizando o processamento. Tente novamente em alguns minutos." xml:space="preserve"><value>We are finalizing processing. Please try again in a few minutes.</value></data>
+  <data name="Número de acesso" xml:space="preserve"><value>Accession number</value></data>
+  <data name="Procedimento" xml:space="preserve"><value>Procedure</value></data>
+  <data name="Data do exame" xml:space="preserve"><value>Exam date</value></data>
+  <data name="Data do laudo" xml:space="preserve"><value>Report date</value></data>
+  <data name="Unidade" xml:space="preserve"><value>Unit</value></data>
+  <data name="Médico executor" xml:space="preserve"><value>Performing physician</value></data>
+  <data name="CRM do médico executor" xml:space="preserve"><value>Performing physician CRM</value></data>
+  <data name="Médico solicitante" xml:space="preserve"><value>Requesting physician</value></data>
+  <data name="CRM do médico solicitante" xml:space="preserve"><value>Requesting physician CRM</value></data>
+  <data name="Não informado no DICOM" xml:space="preserve"><value>Not provided in DICOM</value></data>
+  <data name="Técnico de radiologia" xml:space="preserve"><value>Radiology technician</value></data>
+  <data name="Registro do técnico (CRTR)" xml:space="preserve"><value>Technician registration (CRTR)</value></data>
+  <data name="Status do exame" xml:space="preserve"><value>Exam status</value></data>
+  <data name="Laudo" xml:space="preserve"><value>Report</value></data>
+  <data name="Imagens" xml:space="preserve"><value>Images</value></data>
+  <data name="Compartilhar" xml:space="preserve"><value>Share</value></data>
+  <data name="Abrir laudo e baixar PDF" xml:space="preserve"><value>Open report and download PDF</value></data>
+  <data name="Abrir visualizador de imagens" xml:space="preserve"><value>Open image viewer</value></data>
+  <data name="Abrir QR Code de compartilhamento" xml:space="preserve"><value>Open sharing QR code</value></data>
+  <data name="Dados clínicos do exame" xml:space="preserve"><value>Exam clinical data</value></data>
+  <data name="Número de protocolo é obrigatório." xml:space="preserve"><value>Protocol number is required.</value></data>
+  <data name="Data de nascimento é obrigatória." xml:space="preserve"><value>Date of birth is required.</value></data>
+  <data name="Data de nascimento não pode ser futura." xml:space="preserve"><value>Date of birth cannot be in the future.</value></data>
+  <data name="CPF é obrigatório." xml:space="preserve"><value>CPF is required.</value></data>
+  <data name="Informe um CPF válido com 11 dígitos." xml:space="preserve"><value>Enter a valid CPF with 11 digits.</value></data>
+  <data name="Código de acesso é obrigatório." xml:space="preserve"><value>Access code is required.</value></data>
+  <data name="Exames" xml:space="preserve"><value>Exams</value></data>
+  <data name="Itens por página" xml:space="preserve"><value>Items per page</value></data>
+  <data name="Mostrando {0} a {1} de {2} exames." xml:space="preserve"><value>Showing {0} to {1} of {2} exams.</value></data>
+  <data name="Nenhum exame encontrado." xml:space="preserve"><value>No exams found.</value></data>
+  <data name="Paginação de exames" xml:space="preserve"><value>Exam pagination</value></data>
+  <data name="Anterior" xml:space="preserve"><value>Previous</value></data>
+  <data name="Próxima" xml:space="preserve"><value>Next</value></data>
+  <data name="Arquivos anexados ao exame" xml:space="preserve"><value>Files attached to this exam</value></data>
+  <data name="Nenhum arquivo anexado ao exame." xml:space="preserve"><value>No file attached to this exam.</value></data>
+  <data name="Data do anexo" xml:space="preserve"><value>Attachment date</value></data>
+  <data name="Arquivo" xml:space="preserve"><value>File</value></data>
+  <data name="Anexado por" xml:space="preserve"><value>Attached by</value></data>
+  <data name="Perfil" xml:space="preserve"><value>Role</value></data>
+  <data name="Download" xml:space="preserve"><value>Download</value></data>
+  <data name="Baixar arquivo" xml:space="preserve"><value>Download file</value></data>
+  <data name="Recepção" xml:space="preserve"><value>Reception</value></data>
+  <data name="Auxiliar de sala" xml:space="preserve"><value>Room assistant</value></data>
+  <data name="Página {0} de {1}." xml:space="preserve"><value>Page {0} of {1}.</value></data>
+  <data name="Data do adendo" xml:space="preserve"><value>Addendum date</value></data>
+  <data name="Médico do adendo" xml:space="preserve"><value>Addendum physician</value></data>
+  <data name="CRM do médico do adendo" xml:space="preserve"><value>Addendum physician CRM</value></data>
+  <data name="CNPJ" xml:space="preserve"><value>Tax ID</value></data>
+  <data name="Cabeçalho institucional" xml:space="preserve"><value>Institutional header</value></data>
+  <data name="Rodapé institucional" xml:space="preserve"><value>Institutional footer</value></data>
+  <data name="Assinatura do médico" xml:space="preserve"><value>Physician signature</value></data>
+  <data name="Assinado por" xml:space="preserve"><value>Signed by</value></data>
 </root>

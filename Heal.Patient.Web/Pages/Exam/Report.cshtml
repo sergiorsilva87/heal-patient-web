@@ -3,44 +3,157 @@
 @{
     ViewData["Title"] = L["Laudo médico"];
     ViewData["ShowExit"] = true;
+
+    string FileKind(string fileName)
+    {
+        var extension = System.IO.Path.GetExtension(fileName)?.ToLowerInvariant();
+        return extension switch
+        {
+            ".pdf" => "pdf",
+            ".doc" or ".docx" => "word",
+            ".xls" or ".xlsx" => "excel",
+            ".png" or ".jpg" or ".jpeg" => "image",
+            _ => "generic"
+        };
+    }
+
+    string RoleLabel(string role) => role switch
+    {
+        "reception" => L["Recepção"],
+        "radiology-technician" => L["Técnico de radiologia"],
+        "room-assistant" => L["Auxiliar de sala"],
+        _ => role
+    };
 }
 
 <article class="portal-card bg-white p-4">
-    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
-        <h1 class="h4 mb-0">@L["Laudo médico"]</h1>
-        <span class="portal-chip">@L["Assinado digitalmente (ICP-Brasil)"]</span>
-    </div>
+    <header class="portal-report-header portal-report-header-compact mb-3">
+        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+            <div class="d-flex align-items-center gap-2">
+                <span class="portal-logo-mark">WM</span>
+                <div>
+                    <h2 class="h6 mb-0">@Model.FacilityName</h2>
+                    <p class="small mb-0">@L["CNPJ"]: @Model.FacilityCnpj</p>
+                </div>
+            </div>
+            <span class="small text-muted">@L["Cabeçalho institucional"]</span>
+        </div>
 
-    <div class="mb-3 small text-muted">
-        <strong>@L["Número de protocolo"]:</strong> @Model.Protocol |
-        <strong>@L["Número de acesso"]:</strong> @Model.AccessNumber |
-        <strong>@L["Data do exame"]:</strong> @Model.ExamDate |
-        <strong>@L["Data do laudo"]:</strong> @Model.ReportDate
-    </div>
+        <h1 class="h5 mb-2">@L["Laudo médico"]</h1>
 
-    <section class="portal-panel p-3 mb-3">
-        <h2 class="h6 mb-3">@L["Dados clínicos do exame"]</h2>
-        <dl class="row mb-0">
-            <dt class="col-md-4">@L["Procedimento"]</dt><dd class="col-md-8">@Model.Procedure</dd>
-            <dt class="col-md-4">@L["Unidade"]</dt><dd class="col-md-8">@Model.UnitName</dd>
-            <dt class="col-md-4">@L["Médico executor"]</dt><dd class="col-md-8">@Model.PerformingDoctor</dd>
-            <dt class="col-md-4">@L["CRM do médico executor"]</dt><dd class="col-md-8">@Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf</dd>
-            <dt class="col-md-4">@L["Médico solicitante"]</dt><dd class="col-md-8">@Model.RequestingDoctor</dd>
-            <dt class="col-md-4">@L["CRM do médico solicitante"]</dt><dd class="col-md-8">@(string.IsNullOrWhiteSpace(Model.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{Model.RequestingDoctorCrm} / {Model.RequestingDoctorCrmUf}")</dd>
-            <dt class="col-md-4">@L["Técnico de radiologia"]</dt><dd class="col-md-8">@Model.RadiologyTechnicianName</dd>
-            <dt class="col-md-4">@L["Registro do técnico (CRTR)"]</dt><dd class="col-md-8">@Model.RadiologyTechnicianRegistry / @Model.RadiologyTechnicianRegistryUf</dd>
-        </dl>
+        <div class="portal-report-meta-lines small">
+            <p class="mb-1"><strong>@L["Nome"]:</strong> @Model.PatientName | <strong>@L["ID do paciente"]:</strong> @Model.PatientId | <strong>@L["Data de nascimento"]:</strong> @Model.PatientBirthDate</p>
+            <p class="mb-0"><strong>@L["Número de protocolo"]:</strong> @Model.Protocol | <strong>@L["Número de acesso"]:</strong> @Model.AccessNumber | <strong>@L["Tipo"]:</strong> @Model.ExamType | <strong>@L["Data do exame"]:</strong> @Model.ExamDate | <strong>@L["Data do laudo"]:</strong> @Model.ReportDate</p>
+        </div>
+    </header>
+
+    <section class="mb-3">
+        <h2 class="h6 mb-2">@L["Dados clínicos do exame"]</h2>
+        <div class="portal-clinical-grid small">
+            <p><strong>@L["Procedimento"]:</strong> @Model.Procedure</p>
+            <p><strong>@L["Unidade"]:</strong> @Model.UnitName</p>
+            <p><strong>@L["Médico executor"]:</strong> @Model.PerformingDoctor</p>
+            <p><strong>@L["CRM do médico executor"]:</strong> @Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf</p>
+            <p><strong>@L["Médico solicitante"]:</strong> @Model.RequestingDoctor</p>
+            <p><strong>@L["CRM do médico solicitante"]:</strong> @(string.IsNullOrWhiteSpace(Model.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{Model.RequestingDoctorCrm} / {Model.RequestingDoctorCrmUf}")</p>
+            <p><strong>@L["Técnico de radiologia"]:</strong> @Model.RadiologyTechnicianName</p>
+            <p><strong>@L["Registro do técnico (CRTR)"]:</strong> @Model.RadiologyTechnicianRegistry / @Model.RadiologyTechnicianRegistryUf</p>
+        </div>
     </section>
 
     <section class="mb-4">@Html.Raw(Model.ReportBody)</section>
 
-    <section class="portal-panel p-3">
-        <h2 class="h6">@L["Adendo"]</h2>
-        @Html.Raw(Model.AddendumBody)
+    <section class="portal-signature-block mb-4" aria-label="@L["Assinatura do médico"]">
+        <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
+        <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
+        <p class="small text-muted mb-0">
+            @L["Assinado por"]: @Model.PerformingDoctor | @L["CRM do médico executor"]: @Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf
+        </p>
     </section>
 
-    <div class="mt-4 d-flex gap-2">
-        <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
-        <a class="btn btn-primary" asp-page="/Exam/ColdStorage">@L["Baixar PDF"]</a>
-    </div>
+    <hr class="portal-report-separator my-4" />
+
+    <section class="mb-3">
+        <h2 class="h6">@L["Adendo"]</h2>
+
+        @foreach (var addendum in Model.Addendums)
+        {
+            <article class="p-0 mb-2">
+                <p class="small text-muted mb-2">
+                    <strong>@L["Data do adendo"]:</strong> @addendum.DateText |
+                    <strong>@L["Médico do adendo"]:</strong> @addendum.PhysicianName |
+                    <strong>@L["CRM do médico do adendo"]:</strong> @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
+                </p>
+                <p class="mb-0">@addendum.Body</p>
+                <div class="portal-signature-block mt-3" aria-label="@L["Assinatura do médico"]">
+                    <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
+                    <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
+                    <p class="small text-muted mb-0">
+                        @L["Assinado por"]: @addendum.PhysicianName | @L["CRM do médico do adendo"]: @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
+                    </p>
+                </div>
+            </article>
+        }
+    </section>
+
+    <footer class="portal-report-footer p-3 mt-3">
+        <p class="mb-1"><strong>@L["Rodapé institucional"]:</strong> @Model.FacilityFooterText</p>
+        <p class="mb-1">@Model.FacilityAddress</p>
+        <p class="mb-0">@L["Telefone"]: @Model.FacilityPhone | @L["E-mail"]: @Model.FacilityEmail</p>
+    </footer>
 </article>
+
+<div class="mt-4 d-flex gap-2">
+    <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
+    <a class="btn btn-primary" asp-page="/Exam/ColdStorage">@L["Baixar PDF"]</a>
+</div>
+
+<section class="portal-panel p-3 mt-3">
+    <h2 class="h6">@L["Arquivos anexados ao exame"]</h2>
+
+    @if (Model.Attachments.Count == 0)
+    {
+        <p class="text-muted mb-0">@L["Nenhum arquivo anexado ao exame."]</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>@L["Data do anexo"]</th>
+                        <th>@L["Arquivo"]</th>
+                        <th>@L["Anexado por"]</th>
+                        <th>@L["Perfil"]</th>
+                        <th class="text-end">@L["Download"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attachment in Model.Attachments)
+                    {
+                        var kind = FileKind(attachment.FileName);
+                        <tr>
+                            <td>@attachment.AttachedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                    <div class="portal-file-cell">
+                                        <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
+                                        <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
+                                    </div>
+                            </td>
+                            <td>@attachment.UploadedByName</td>
+                            <td>@RoleLabel(attachment.UploadedByRole)</td>
+                            <td class="text-end">
+                                          <a class="btn btn-sm btn-outline-primary portal-table-action"
+                                   asp-page="/Exam/Report"
+                                   asp-page-handler="DownloadAttachment"
+                                   asp-route-attachmentId="@attachment.Id">
+                                    @L["Baixar arquivo"]
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

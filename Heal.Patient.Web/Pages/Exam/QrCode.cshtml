@@ -13,25 +13,40 @@
       <div class="qr-placeholder" aria-label="@L["QR code do exame"]"></div>
     </div>
 
-    <div class="input-group mb-3">
-        <input id="qrLink" class="form-control" value="@Model.ShareLink" readonly>
-        <button class="btn btn-outline-secondary" type="button" id="copyBtn">@L["Copiar link"]</button>
+    <div class="portal-share-link-bar mb-3">
+      <div id="qrLink" class="portal-share-link-text" role="textbox" aria-readonly="true">@Model.ShareLink</div>
+        <button class="portal-copy-btn" type="button" id="copyBtn" title="@L["Copiar link"]" aria-label="@L["Copiar link"]">
+        <span class="portal-copy-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">@L["Copiar link"]</span>
+        </button>
     </div>
 
-      <div id="copyFeedback" class="small text-success d-none">@L["Link copiado!"]</div>
+      <div id="copyFeedback" class="small text-success d-none" aria-live="polite">@L["Link copiado!"]</div>
 
-      <a class="btn btn-outline-secondary mt-3" asp-page="/Exam/Index">@L["Voltar"]</a>
+      <a class="portal-back-link mt-4 d-block" asp-page="/Exam/Index">@L["Voltar"]</a>
 </section>
 
 @section Scripts {
 <script>
   const btn = document.getElementById('copyBtn');
-  const input = document.getElementById('qrLink');
+  const linkText = document.getElementById('qrLink');
   const feedback = document.getElementById('copyFeedback');
   btn.addEventListener('click', async () => {
-    await navigator.clipboard.writeText(input.value);
-    feedback.classList.remove('d-none');
-    setTimeout(() => feedback.classList.add('d-none'), 1600);
+    try {
+      await navigator.clipboard.writeText(linkText.textContent || '');
+      feedback.classList.remove('d-none');
+      btn.classList.add('is-copied');
+      setTimeout(() => {
+        feedback.classList.add('d-none');
+        btn.classList.remove('is-copied');
+      }, 1600);
+    } catch {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(linkText);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
   });
 </script>
 }

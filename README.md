@@ -24,14 +24,23 @@ Cada clínica ou hospital que usa a plataforma tem o seu próprio portal, com a 
 ### Visualização do laudo médico
 
 - Leitura do **laudo médico** diretamente no navegador, sem necessidade de instalar nenhum programa.
+- O laudo exibe **cabeçalho e rodapé institucionais** com dados da clínica/hospital (identificação e contato), mantendo o padrão documental.
 - Quando a clínica ou hospital exige, o laudo é **assinado digitalmente com certificado ICP-Brasil**, conferindo validade jurídica plena. Essa exigência é configurável — nem todas as instituições precisam desse nível de assinatura.
 - Um laudo nunca é alterado após a assinatura. Caso o médico precise complementar alguma informação, ele inclui um **adendo** — um texto adicional exibido logo abaixo do laudo original, em ordem cronológica. O conteúdo original permanece intacto e visível.
+- Cada adendo exibe seus metadados de autoria e rastreabilidade: **data do adendo**, **nome do médico que adicionou**, **CRM** e **UF do CRM**.
+- A tela do laudo também pode listar os **anexos do exame (0..n)** com download individual por arquivo.
 - Quando um adendo é publicado, o paciente recebe uma notificação (por e-mail e/ou SMS, se configurado) informando que há uma atualização no seu resultado.
 
 ### Download do laudo em PDF
 
 - O paciente pode baixar o laudo em formato PDF para guardar, enviar ao médico solicitante ou apresentar em outra consulta.
 - Laudos mais antigos podem não estar disponíveis imediatamente para download. Nesses casos, o portal exibe uma mensagem amigável explicando que o arquivo está sendo recuperado e que o download ficará disponível em breve — sem mensagens técnicas ou de erro. O próprio portal atualiza o status da solicitação ("Seu laudo está sendo preparado" → "Seu laudo está pronto para download") e, se a clínica tiver e-mail configurado e o paciente tiver e-mail cadastrado, ele também recebe uma notificação quando estiver pronto.
+
+### Download de anexos do exame (0..n)
+
+- Na mesma tela de download do laudo, o portal também exibe os arquivos anexados pela equipe da clínica (recepção, técnico de radiologia ou auxiliar de sala).
+- Os anexos são apresentados em tabela com: data/hora do anexo, nome do arquivo, nome de quem anexou, perfil/role e ação de download.
+- O portal exibe um ícone visual coerente com o tipo de arquivo (ex.: PDF, Word, imagem), facilitando identificação rápida pelo paciente.
 
 ### Visualização das imagens médicas
 

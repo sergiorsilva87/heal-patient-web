@@ -3,6 +3,27 @@
 @{
     ViewData["Title"] = L["Preparando seu laudo"];
     ViewData["ShowExit"] = true;
+
+    string FileKind(string fileName)
+    {
+        var extension = System.IO.Path.GetExtension(fileName)?.ToLowerInvariant();
+        return extension switch
+        {
+            ".pdf" => "pdf",
+            ".doc" or ".docx" => "word",
+            ".xls" or ".xlsx" => "excel",
+            ".png" or ".jpg" or ".jpeg" => "image",
+            _ => "generic"
+        };
+    }
+
+    string RoleLabel(string role) => role switch
+    {
+        "reception" => L["Recepção"],
+        "radiology-technician" => L["Técnico de radiologia"],
+        "room-assistant" => L["Auxiliar de sala"],
+        _ => role
+    };
 }
 
 <section class="portal-card bg-white p-4">
@@ -20,6 +41,56 @@
         <input class="form-control" type="email" placeholder="@L["email@exemplo.com"]" />
         <button class="btn btn-outline-primary" type="button">@L["Confirmar"]</button>
     </div>
+
+    <section class="mt-4">
+        <h2 class="h5">@L["Arquivos anexados ao exame"]</h2>
+
+        @if (Model.Attachments.Count == 0)
+        {
+            <p class="text-muted mb-0">@L["Nenhum arquivo anexado ao exame."]</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-sm align-middle">
+                    <thead>
+                        <tr>
+                            <th>@L["Data do anexo"]</th>
+                            <th>@L["Arquivo"]</th>
+                            <th>@L["Anexado por"]</th>
+                            <th>@L["Perfil"]</th>
+                            <th class="text-end">@L["Download"]</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var attachment in Model.Attachments)
+                        {
+                            var kind = FileKind(attachment.FileName);
+                            <tr>
+                                <td>@attachment.AttachedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>
+                                    <div class="portal-file-cell">
+                                        <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
+                                        <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
+                                    </div>
+                                </td>
+                                <td>@attachment.UploadedByName</td>
+                                <td>@RoleLabel(attachment.UploadedByRole)</td>
+                                <td class="text-end">
+                                                <a class="btn btn-sm btn-outline-primary portal-table-action"
+                                       asp-page="/Exam/ColdStorage"
+                                       asp-page-handler="DownloadAttachment"
+                                       asp-route-attachmentId="@attachment.Id">
+                                        @L["Baixar arquivo"]
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
 
     <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
 </section>

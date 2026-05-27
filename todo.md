@@ -13,6 +13,7 @@ Responsável por autenticação, sessões e permissões — inclusive para o ace
 - [ ] Registrar evento quando o paciente **acessa o fluxo de download do laudo/PDF** (`PatientReportDownloadRequested`)
 - [ ] Registrar evento quando o paciente **visualiza imagens do exame** (`PatientImagesViewed`)
 - [ ] Registrar evento quando o paciente **imprime imagens do exame** (`PatientImagesPrinted`)
+- [ ] Registrar evento quando o paciente **faz download de anexos do exame** (`PatientExamAttachmentDownloaded`)
 - [ ] Padronizar payload de auditoria com: `TenantId`, `PatientId`, `AccessionNumber`, `ReportId/StudyInstanceUid`, `TimestampUtc`, `SourceIp`, `UserAgent`
 - [ ] Definir política de retenção e consulta operacional da trilha de auditoria para o portal do paciente
 
@@ -94,8 +95,10 @@ Responsável pela criação, revisão, assinatura e ciclo de vida do laudo médi
 - [ ] Adendo segue a mesma regra de assinatura do laudo original: **ICP-Brasil quando exigido pelo tenant**, sem assinatura certificada caso contrário
 - [ ] Um laudo pode ter **múltiplos adendos** ao longo do tempo
 - [ ] Adendos são exibidos em ordem cronológica após o corpo do laudo original
+- [ ] Cada adendo deve exibir metadados completos de autoria: data do adendo, nome do médico autor, CRM e UF do CRM
 - [ ] Registrar evento `ReportAddendumPublished` ao concluir e assinar um adendo
 - [ ] Adendo publicado deve acionar entrega atualizada ao paciente e ao médico solicitante (via DeliveryContext e NotificationContext)
+- [ ] Exibir cabeçalho e rodapé institucionais no laudo visualizado pelo paciente (dados da clínica/hospital)
 
 ---
 
@@ -139,6 +142,10 @@ Responsável pela entrega do resultado ao paciente e ao médico solicitante — 
 - [ ] Se o e-mail do paciente estiver cadastrado **e** o tenant tiver e-mail configurado corretamente (BC-PLT-02), notificar o paciente via e-mail quando o download estiver disponível (via NotificationContext)
 - [ ] Exibir no portal o **status da solicitação** de forma clara e não técnica (ex.: "Seu laudo está sendo preparado", "Seu laudo está pronto para download")
 - [ ] PDF do laudo deve incluir o laudo original e todos os adendos existentes
+- [ ] Na tela de download do laudo, listar anexos do exame (0..n) com data/hora do anexo, nome do arquivo, anexado por, perfil/role e ação de download
+- [ ] Na tela de visualização do laudo, listar anexos do exame (0..n) com os mesmos metadados e download individual
+- [ ] Suportar download individual dos anexos vinculados ao exame
+- [ ] Exibir ícone visual conforme tipo do arquivo anexado (ex.: PDF, Word, imagem)
 
 ---
 
