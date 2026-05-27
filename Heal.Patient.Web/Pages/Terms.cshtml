@@ -1,0 +1,33 @@
+@page
+@model Heal.Patient.Web.Pages.TermsModel
+@{
+    ViewData["Title"] = L["Termos e Condições"];
+}
+
+<article class="portal-card bg-white p-4">
+    <h1 class="h4">@L["Termos e Condições"]</h1>
+
+    <p>@L["Estes Termos e Condições disciplinam o uso do Portal do Paciente da clínica para consulta de laudos e imagens médicas."]</p>
+
+    <h2 class="h6 mt-4">@L["1. Objeto"]</h2>
+    <p>@L["O portal permite ao paciente visualizar e compartilhar resultados em caráter informativo e assistencial."]</p>
+
+    <h2 class="h6 mt-4">@L["2. Forma de acesso"]</h2>
+    <p>@L["O acesso ocorre por número de protocolo e data de nascimento, ou por CPF e código temporário."]</p>
+
+    <h2 class="h6 mt-4">@L["3. Responsabilidades do usuário"]</h2>
+    <p>@L["O usuário deve manter seus dados de acesso em sigilo e utilizar as informações de forma legítima."]</p>
+
+    <h2 class="h6 mt-4">@L["4. Assinatura e integridade"]</h2>
+    <p>@L["Laudos podem ser assinados digitalmente e o documento original não é alterado após conclusão."]</p>
+
+    <h2 class="h6 mt-4">@L["5. Disponibilidade"]</h2>
+    <p>@L["Laudos antigos podem entrar em recuperação de arquivo, com disponibilização posterior."]</p>
+
+    <h2 class="h6 mt-4">@L["6. Disposições finais"]</h2>
+    <p>@L["Ao usar o portal, o paciente declara ciência destes termos e da política de privacidade."]</p>
+
+    <div class="mt-4">
+        <a class="btn btn-outline-primary" asp-page="/Index">@L["Voltar para login"]</a>
+    </div>
+</article>

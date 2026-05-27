@@ -1,0 +1,46 @@
+@page
+@model Heal.Patient.Web.Pages.Exam.ReportModel
+@{
+    ViewData["Title"] = L["Laudo médico"];
+    ViewData["ShowExit"] = true;
+}
+
+<article class="portal-card bg-white p-4">
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-3">
+        <h1 class="h4 mb-0">@L["Laudo médico"]</h1>
+        <span class="portal-chip">@L["Assinado digitalmente (ICP-Brasil)"]</span>
+    </div>
+
+    <div class="mb-3 small text-muted">
+        <strong>@L["Número de protocolo"]:</strong> @Model.Protocol |
+        <strong>@L["Número de acesso"]:</strong> @Model.AccessNumber |
+        <strong>@L["Data do exame"]:</strong> @Model.ExamDate |
+        <strong>@L["Data do laudo"]:</strong> @Model.ReportDate
+    </div>
+
+    <section class="portal-panel p-3 mb-3">
+        <h2 class="h6 mb-3">@L["Dados clínicos do exame"]</h2>
+        <dl class="row mb-0">
+            <dt class="col-md-4">@L["Procedimento"]</dt><dd class="col-md-8">@Model.Procedure</dd>
+            <dt class="col-md-4">@L["Unidade"]</dt><dd class="col-md-8">@Model.UnitName</dd>
+            <dt class="col-md-4">@L["Médico executor"]</dt><dd class="col-md-8">@Model.PerformingDoctor</dd>
+            <dt class="col-md-4">@L["CRM do médico executor"]</dt><dd class="col-md-8">@Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf</dd>
+            <dt class="col-md-4">@L["Médico solicitante"]</dt><dd class="col-md-8">@Model.RequestingDoctor</dd>
+            <dt class="col-md-4">@L["CRM do médico solicitante"]</dt><dd class="col-md-8">@(string.IsNullOrWhiteSpace(Model.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{Model.RequestingDoctorCrm} / {Model.RequestingDoctorCrmUf}")</dd>
+            <dt class="col-md-4">@L["Técnico de radiologia"]</dt><dd class="col-md-8">@Model.RadiologyTechnicianName</dd>
+            <dt class="col-md-4">@L["Registro do técnico (CRTR)"]</dt><dd class="col-md-8">@Model.RadiologyTechnicianRegistry / @Model.RadiologyTechnicianRegistryUf</dd>
+        </dl>
+    </section>
+
+    <section class="mb-4">@Html.Raw(Model.ReportBody)</section>
+
+    <section class="portal-panel p-3">
+        <h2 class="h6">@L["Adendo"]</h2>
+        @Html.Raw(Model.AddendumBody)
+    </section>
+
+    <div class="mt-4 d-flex gap-2">
+        <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
+        <a class="btn btn-primary" asp-page="/Exam/ColdStorage">@L["Baixar PDF"]</a>
+    </div>
+</article>

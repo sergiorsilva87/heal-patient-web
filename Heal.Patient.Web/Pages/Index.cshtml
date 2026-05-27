@@ -1,0 +1,83 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = L["Acesse seu exame"];
+    var maxBirthDate = DateTime.Today.ToString("yyyy-MM-dd");
+    var protocolActive = Model.ActiveTab != "cpf";
+    var cpfActive = Model.ActiveTab == "cpf";
+}
+
+<section class="row justify-content-center">
+    <div class="col-12 col-lg-8 col-xl-7">
+        <article class="portal-card bg-white p-4 p-md-5">
+            <h1 class="h3 mb-2">@L["Acesse seu exame"]</h1>
+            <p class="text-muted mb-4">@L["Escolha uma forma de acesso abaixo."]</p>
+            <p class="small mb-4">@L["Você pode acessar por número de protocolo ou, se preferir, por CPF e código."]</p>
+
+            <div class="alert alert-info py-2 mb-4" role="note">
+                @L["Se não encontrar seu exame, toque em Ajuda."]
+            </div>
+
+            <ul class="nav nav-tabs portal-access-tabs mb-3" id="accessTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(protocolActive ? "active" : string.Empty)" id="protocol-tab" data-bs-toggle="tab" data-bs-target="#protocol-pane" type="button" role="tab" aria-controls="protocol-pane" aria-selected="@(protocolActive ? "true" : "false")">@L["Número de protocolo"]</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link @(cpfActive ? "active" : string.Empty)" id="cpf-tab" data-bs-toggle="tab" data-bs-target="#cpf-pane" type="button" role="tab" aria-controls="cpf-pane" aria-selected="@(cpfActive ? "true" : "false")">@L["CPF e código"]</button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="accessTabContent">
+                <div class="tab-pane fade @(protocolActive ? "show active" : string.Empty)" id="protocol-pane" role="tabpanel" aria-labelledby="protocol-tab" tabindex="0">
+                    <form method="post" asp-page-handler="Protocol" class="row g-3">
+                        @if (protocolActive && !ViewData.ModelState.IsValid)
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+                            </div>
+                        }
+
+                        <div class="col-12">
+                            <label asp-for="Protocol" class="form-label">@L["Número de protocolo"]</label>
+                            <input asp-for="Protocol" class="form-control" placeholder="2024001234" autocomplete="off" required />
+                            <span asp-validation-for="Protocol" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="BirthDate" class="form-label">@L["Data de nascimento"]</label>
+                            <input asp-for="BirthDate" class="form-control" type="date" max="@maxBirthDate" required />
+                            <span asp-validation-for="BirthDate" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 d-grid">
+                            <button class="btn btn-primary" type="submit">@L["Acessar"]</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade @(cpfActive ? "show active" : string.Empty)" id="cpf-pane" role="tabpanel" aria-labelledby="cpf-tab" tabindex="0">
+                    <form method="post" asp-page-handler="Cpf" class="row g-3">
+                        @if (cpfActive && !ViewData.ModelState.IsValid)
+                        {
+                            <div class="col-12">
+                                <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
+                            </div>
+                        }
+
+                        <div class="col-12">
+                            <label asp-for="Cpf" class="form-label">@L["CPF"]</label>
+                            <input asp-for="Cpf" class="form-control" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off" required />
+                            <span asp-validation-for="Cpf" class="text-danger"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Code" class="form-label">@L["Código de acesso"]</label>
+                            <input asp-for="Code" class="form-control" placeholder="A1B2C3" autocomplete="off" required />
+                            <span asp-validation-for="Code" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 d-grid">
+                            <button class="btn btn-primary" type="submit">@L["Acessar"]</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </article>
+    </div>
+</section>

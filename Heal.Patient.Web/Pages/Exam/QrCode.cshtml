@@ -1,0 +1,37 @@
+@page
+@model Heal.Patient.Web.Pages.Exam.QrCodeModel
+@{
+    ViewData["Title"] = L["Compartilhar exame"];
+    ViewData["ShowExit"] = true;
+}
+
+<section class="portal-card bg-white p-4 text-center">
+    <h1 class="h4">@L["Compartilhar exame"]</h1>
+    <p class="text-muted">@L["Escaneie o QR Code para compartilhar o acesso com o médico."]</p>
+
+    <div class="d-flex justify-content-center my-3">
+      <div class="qr-placeholder" aria-label="@L["QR code do exame"]"></div>
+    </div>
+
+    <div class="input-group mb-3">
+        <input id="qrLink" class="form-control" value="@Model.ShareLink" readonly>
+        <button class="btn btn-outline-secondary" type="button" id="copyBtn">@L["Copiar link"]</button>
+    </div>
+
+      <div id="copyFeedback" class="small text-success d-none">@L["Link copiado!"]</div>
+
+      <a class="btn btn-outline-secondary mt-3" asp-page="/Exam/Index">@L["Voltar"]</a>
+</section>
+
+@section Scripts {
+<script>
+  const btn = document.getElementById('copyBtn');
+  const input = document.getElementById('qrLink');
+  const feedback = document.getElementById('copyFeedback');
+  btn.addEventListener('click', async () => {
+    await navigator.clipboard.writeText(input.value);
+    feedback.classList.remove('d-none');
+    setTimeout(() => feedback.classList.add('d-none'), 1600);
+  });
+</script>
+}

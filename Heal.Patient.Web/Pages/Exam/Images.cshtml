@@ -1,0 +1,51 @@
+@page
+@model Heal.Patient.Web.Pages.Exam.ImagesModel
+@{
+    ViewData["Title"] = L["Imagens do exame"];
+    ViewData["ShowExit"] = true;
+}
+
+<section class="portal-card bg-white p-4">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h1 class="h4 mb-0">@L["Imagens do exame"]</h1>
+        <button id="print" class="btn btn-outline-dark" type="button">@L["Imprimir imagens"]</button>
+    </div>
+
+    <div class="d-flex gap-2 mb-2 flex-wrap">
+        <button class="btn btn-sm btn-outline-secondary" type="button">@L["Navegar"]</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button">@L["Zoom"]</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button">@L["Contraste"]</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button">@L["Pan"]</button>
+        <button class="btn btn-sm btn-outline-secondary" type="button">@L["Resetar"]</button>
+    </div>
+
+    <div class="portal-viewer d-flex flex-column justify-content-center align-items-center text-light">
+        <div class="spinner-border mb-2" role="status" aria-hidden="true"></div>
+        <div>@L["Carregando imagens..."]</div>
+        <small class="text-secondary mt-2">@L["Powered by DWV"]</small>
+    </div>
+
+    <a class="btn btn-outline-secondary mt-3" asp-page="/Exam/Index">@L["Voltar"]</a>
+</section>
+
+@section Scripts {
+    <script>
+        (function () {
+            const printButton = document.getElementById('print');
+            if (!printButton) return;
+
+            printButton.addEventListener('click', async function () {
+                try {
+                    await fetch('@Url.Page("/Exam/Images", "RegisterPrint")', {
+                        method: 'GET',
+                        credentials: 'same-origin'
+                    });
+                } catch {
+                    // Keep print flow working even if telemetry request fails.
+                } finally {
+                    window.print();
+                }
+            });
+        })();
+    </script>
+}

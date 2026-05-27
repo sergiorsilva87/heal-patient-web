@@ -1,0 +1,25 @@
+@page
+@model Heal.Patient.Web.Pages.Exam.ColdStorageModel
+@{
+    ViewData["Title"] = L["Preparando seu laudo"];
+    ViewData["ShowExit"] = true;
+}
+
+<section class="portal-card bg-white p-4">
+    <h1 class="h4">@L["Preparando seu laudo"]</h1>
+    <p class="text-muted">@L["Seu laudo está sendo recuperado do arquivo. Em breve estará disponível para download."]</p>
+
+    <ol class="list-group list-group-numbered mb-4">
+        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Solicitado"] <span class="badge text-bg-success">@L["ok"]</span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Em preparação"] <span class="spinner-border spinner-border-sm"></span></li>
+        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Pronto"] <span class="badge text-bg-secondary">@L["pendente"]</span></li>
+    </ol>
+
+    <label class="form-label">@L["Receber notificação por e-mail"]</label>
+    <div class="input-group mb-3">
+        <input class="form-control" type="email" placeholder="@L["email@exemplo.com"]" />
+        <button class="btn btn-outline-primary" type="button">@L["Confirmar"]</button>
+    </div>
+
+    <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
+</section>

@@ -1,0 +1,42 @@
+@page
+@model Heal.Patient.Web.Pages.HelpModel
+@{
+    ViewData["Title"] = L["Central de Ajuda"];
+}
+
+<section class="portal-card bg-white p-4">
+    <h1 class="h4">@L["Central de Ajuda"]</h1>
+
+    <h2 class="h6 mt-4">@L["Perguntas frequentes"]</h2>
+    <div class="accordion" id="faqAccordion">
+        @for (var i = 0; i < Model.FaqItems.Length; i++)
+        {
+            var item = Model.FaqItems[i];
+            <div class="accordion-item">
+                <h3 class="accordion-header" id="heading-@i">
+                    <button class="accordion-button @(i == 0 ? string.Empty : "collapsed")" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@i" aria-expanded="@(i == 0 ? "true" : "false")">
+                        @item.Question
+                    </button>
+                </h3>
+                <div id="collapse-@i" class="accordion-collapse collapse @(i == 0 ? "show" : string.Empty)" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">@item.Answer</div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <h2 class="h6 mt-4">@L["Contato da clínica"]</h2>
+    <p class="mb-1"><strong>@L["Telefone"]:</strong> (11) 3000-0000</p>
+    <p class="mb-1"><strong>@L["E-mail"]:</strong> atendimento@clinica-abc.com.br</p>
+
+    <h2 class="h6 mt-4">@L["Como acessar meu exame"]</h2>
+    <ol>
+        <li>@L["Informe número de protocolo e data de nascimento."]</li>
+        <li>@L["Ou use CPF e código de acesso temporário."]</li>
+        <li>@L["Abra laudo, imagens, PDF e compartilhamento via QR Code."]</li>
+    </ol>
+
+    <div class="mt-4">
+        <a class="btn btn-outline-primary" asp-page="/Index">@L["Voltar para login"]</a>
+    </div>
+</section>

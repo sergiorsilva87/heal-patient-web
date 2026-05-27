@@ -1,0 +1,198 @@
+@page "/exam"
+@model Heal.Patient.Web.Pages.Exam.IndexModel
+@{
+    ViewData["Title"] = L["Meu exame"];
+    ViewData["ShowExit"] = true;
+}
+
+<section class="portal-panel p-4 mb-3">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <h1 class="h4 mb-0">@L["Meu exame"]</h1>
+        <span class="portal-chip">@L["Resultado disponível"]</span>
+    </div>
+    <p class="text-muted mt-2 mb-0">@L["Olá {0} meus parabéns!", Model.PatientName]</p>
+    <p class="small mt-2 mb-0">@L["Confira o status abaixo para saber o próximo passo em cada exame."]</p>
+</section>
+
+<div class="row g-3">
+    <div class="col-12">
+        <article class="portal-card bg-white p-4">
+            <h2 class="h6 text-uppercase text-muted">@L["Dados do paciente"]</h2>
+            <dl class="row mb-0 gy-2">
+                <dt class="col-12 col-md-2">@L["Nome"]</dt><dd class="col-12 col-md-10">@Model.PatientName</dd>
+                <dt class="col-12 col-md-2">@L["ID do paciente"]</dt><dd class="col-12 col-md-4">@Model.PatientId</dd>
+                <dt class="col-12 col-md-2">@L["Data de nascimento"]</dt><dd class="col-12 col-md-4">@Model.PatientBirthDate</dd>
+                <dt class="col-12 col-md-2">@L["CPF"]</dt><dd class="col-12 col-md-4">@Model.PatientCpfMasked</dd>
+            </dl>
+        </article>
+    </div>
+
+    <div class="col-12">
+        <div class="alert alert-info py-2" role="note">
+            @L["Se não encontrar seu exame, toque em Ajuda."]
+        </div>
+    </div>
+
+    <div class="col-12">
+        <h2 class="h6 text-uppercase text-muted mb-2">@L["Mais recentes"]</h2>
+        <div class="row g-3">
+            @for (var i = 0; i < Model.RecentExams.Count; i++)
+            {
+                var exam = Model.RecentExams[i];
+                var statusText = exam.StatusCode switch
+                {
+                    "ready-report" => L["Pronto para laudo"],
+                    "images-available" => L["Imagens disponíveis"],
+                    _ => L["Em processamento"]
+                };
+                var statusDetail = exam.StatusCode switch
+                {
+                    "ready-report" => L["Laudo pronto para visualização e download em PDF."],
+                    "images-available" => L["Imagens prontas para visualização e impressão."],
+                    _ => L["Estamos finalizando o processamento. Tente novamente em alguns minutos."]
+                };
+                var statusClass = exam.StatusCode switch
+                {
+                    "ready-report" => "portal-status portal-status-ready",
+                    "images-available" => "portal-status portal-status-images",
+                    _ => "portal-status portal-status-processing"
+                };
+
+                <div class="col-12">
+                    <article class="portal-card bg-white p-4">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                            <h3 class="h6 text-uppercase text-muted mb-0">@L["Dados do exame"] #@(i + 1)</h3>
+                            <span class="portal-chip">@L["Resultado disponível"]</span>
+                        </div>
+
+                        <dl class="row mb-3">
+                            <dt class="col-md-4">@L["Número de protocolo"]</dt><dd class="col-md-8">@exam.Protocol</dd>
+                            <dt class="col-md-4">@L["Número de acesso"]</dt><dd class="col-md-8">@exam.AccessNumber</dd>
+                            <dt class="col-md-4">@L["Tipo"]</dt><dd class="col-md-8">@exam.Type</dd>
+                            <dt class="col-md-4">@L["Procedimento"]</dt><dd class="col-md-8">@exam.Procedure</dd>
+                            <dt class="col-md-4">@L["Data do exame"]</dt><dd class="col-md-8">@exam.Date</dd>
+                            <dt class="col-md-4">@L["Data do laudo"]</dt><dd class="col-md-8">@exam.ReportDateText</dd>
+                            <dt class="col-md-4">@L["Unidade"]</dt><dd class="col-md-8">@exam.UnitName</dd>
+                            <dt class="col-md-4">@L["Médico executor"]</dt><dd class="col-md-8">@exam.PerformingDoctor</dd>
+                            <dt class="col-md-4">@L["CRM do médico executor"]</dt><dd class="col-md-8">@exam.PerformingDoctorCrm / @exam.PerformingDoctorCrmUf</dd>
+                            <dt class="col-md-4">@L["Médico solicitante"]</dt><dd class="col-md-8">@exam.RequestingDoctor</dd>
+                            <dt class="col-md-4">@L["CRM do médico solicitante"]</dt><dd class="col-md-8">@(string.IsNullOrWhiteSpace(exam.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{exam.RequestingDoctorCrm} / {exam.RequestingDoctorCrmUf}")</dd>
+                            <dt class="col-md-4">@L["Técnico de radiologia"]</dt><dd class="col-md-8">@exam.RadiologyTechnicianName</dd>
+                            <dt class="col-md-4">@L["Registro do técnico (CRTR)"]</dt><dd class="col-md-8">@exam.RadiologyTechnicianRegistry / @exam.RadiologyTechnicianRegistryUf</dd>
+                        </dl>
+
+                        <div class="portal-status-block mb-3">
+                            <span class="fw-semibold d-block">@L["Status do exame"]</span>
+                            <span class="@statusClass">@statusText</span>
+                            <span class="d-block small text-muted mt-1">@statusDetail</span>
+                        </div>
+
+                        <div class="row g-2">
+                            <div class="col-md-4">
+                                <div class="portal-action-group h-100">
+                                    <span class="portal-action-title">@L["Laudo"]</span>
+                                    <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/Report">@L["Abrir laudo e baixar PDF"]</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="portal-action-group h-100">
+                                    <span class="portal-action-title">@L["Imagens"]</span>
+                                    <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/Images">@L["Abrir visualizador de imagens"]</a>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="portal-action-group h-100">
+                                    <span class="portal-action-title">@L["Compartilhar"]</span>
+                                    <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/QrCode">@L["Abrir QR Code de compartilhamento"]</a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.OlderExams.Count > 0)
+    {
+        <div class="col-12 mt-4 portal-older-section">
+            <h2 class="h6 text-uppercase text-muted mb-2">@L["Anteriores"]</h2>
+            <div class="row g-3">
+                @for (var i = 0; i < Model.OlderExams.Count; i++)
+                {
+                    var exam = Model.OlderExams[i];
+                    var statusText = exam.StatusCode switch
+                    {
+                        "ready-report" => L["Pronto para laudo"],
+                        "images-available" => L["Imagens disponíveis"],
+                        _ => L["Em processamento"]
+                    };
+                    var statusDetail = exam.StatusCode switch
+                    {
+                        "ready-report" => L["Laudo pronto para visualização e download em PDF."],
+                        "images-available" => L["Imagens prontas para visualização e impressão."],
+                        _ => L["Estamos finalizando o processamento. Tente novamente em alguns minutos."]
+                    };
+                    var statusClass = exam.StatusCode switch
+                    {
+                        "ready-report" => "portal-status portal-status-ready",
+                        "images-available" => "portal-status portal-status-images",
+                        _ => "portal-status portal-status-processing"
+                    };
+
+                    <div class="col-12">
+                        <article class="portal-card bg-white p-4">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                                <h3 class="h6 text-uppercase text-muted mb-0">@L["Dados do exame"]</h3>
+                                <span class="portal-chip">@L["Resultado disponível"]</span>
+                            </div>
+
+                            <dl class="row mb-3">
+                                <dt class="col-md-4">@L["Número de protocolo"]</dt><dd class="col-md-8">@exam.Protocol</dd>
+                                <dt class="col-md-4">@L["Número de acesso"]</dt><dd class="col-md-8">@exam.AccessNumber</dd>
+                                <dt class="col-md-4">@L["Tipo"]</dt><dd class="col-md-8">@exam.Type</dd>
+                                <dt class="col-md-4">@L["Procedimento"]</dt><dd class="col-md-8">@exam.Procedure</dd>
+                                <dt class="col-md-4">@L["Data do exame"]</dt><dd class="col-md-8">@exam.Date</dd>
+                                <dt class="col-md-4">@L["Data do laudo"]</dt><dd class="col-md-8">@exam.ReportDateText</dd>
+                                <dt class="col-md-4">@L["Unidade"]</dt><dd class="col-md-8">@exam.UnitName</dd>
+                                <dt class="col-md-4">@L["Médico executor"]</dt><dd class="col-md-8">@exam.PerformingDoctor</dd>
+                                <dt class="col-md-4">@L["CRM do médico executor"]</dt><dd class="col-md-8">@exam.PerformingDoctorCrm / @exam.PerformingDoctorCrmUf</dd>
+                                <dt class="col-md-4">@L["Médico solicitante"]</dt><dd class="col-md-8">@exam.RequestingDoctor</dd>
+                                <dt class="col-md-4">@L["CRM do médico solicitante"]</dt><dd class="col-md-8">@(string.IsNullOrWhiteSpace(exam.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{exam.RequestingDoctorCrm} / {exam.RequestingDoctorCrmUf}")</dd>
+                                <dt class="col-md-4">@L["Técnico de radiologia"]</dt><dd class="col-md-8">@exam.RadiologyTechnicianName</dd>
+                                <dt class="col-md-4">@L["Registro do técnico (CRTR)"]</dt><dd class="col-md-8">@exam.RadiologyTechnicianRegistry / @exam.RadiologyTechnicianRegistryUf</dd>
+                            </dl>
+
+                            <div class="portal-status-block mb-3">
+                                <span class="fw-semibold d-block">@L["Status do exame"]</span>
+                                <span class="@statusClass">@statusText</span>
+                                <span class="d-block small text-muted mt-1">@statusDetail</span>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <div class="portal-action-group h-100">
+                                        <span class="portal-action-title">@L["Laudo"]</span>
+                                        <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/Report">@L["Abrir laudo e baixar PDF"]</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="portal-action-group h-100">
+                                        <span class="portal-action-title">@L["Imagens"]</span>
+                                        <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/Images">@L["Abrir visualizador de imagens"]</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="portal-action-group h-100">
+                                        <span class="portal-action-title">@L["Compartilhar"]</span>
+                                        <a class="btn btn-outline-primary w-100 mt-2" asp-page="/Exam/QrCode">@L["Abrir QR Code de compartilhamento"]</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>

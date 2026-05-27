@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+
+  <data name="Portal do Paciente" xml:space="preserve"><value>Patient Portal</value></data>
+  <data name="Clínica Imagem Saúde" xml:space="preserve"><value>Health Imaging Clinic</value></data>
+  <data name="Ajuda" xml:space="preserve"><value>Help</value></data>
+  <data name="Termos" xml:space="preserve"><value>Terms</value></data>
+  <data name="Privacidade" xml:space="preserve"><value>Privacy</value></data>
+  <data name="Sair" xml:space="preserve"><value>Exit</value></data>
+  <data name="Idioma" xml:space="preserve"><value>Language</value></data>
+  <data name="Utilizamos cookies essenciais para funcionamento do portal. Ao continuar, você concorda com nossa política e termos." xml:space="preserve"><value>We use essential cookies to operate this portal. By continuing, you agree with our policy and terms.</value></data>
+  <data name="Aceitar" xml:space="preserve"><value>Accept</value></data>
+
+  <data name="Acesse seu exame" xml:space="preserve"><value>Access your exam</value></data>
+  <data name="Escolha uma forma de acesso abaixo." xml:space="preserve"><value>Choose one of the access options below.</value></data>
+  <data name="Número de protocolo" xml:space="preserve"><value>Protocol number</value></data>
+  <data name="CPF e código" xml:space="preserve"><value>CPF and code</value></data>
+  <data name="Data de nascimento" xml:space="preserve"><value>Date of birth</value></data>
+  <data name="Acessar" xml:space="preserve"><value>Access</value></data>
+  <data name="CPF" xml:space="preserve"><value>CPF</value></data>
+  <data name="Código de acesso" xml:space="preserve"><value>Access code</value></data>
+
+  <data name="Meu exame" xml:space="preserve"><value>My exam</value></data>
+  <data name="Resultado disponível" xml:space="preserve"><value>Result available</value></data>
+  <data name="Olá {0} meus parabéns!" xml:space="preserve"><value>Hello {0} congratulations!</value></data>
+  <data name="Dados do paciente" xml:space="preserve"><value>Patient data</value></data>
+  <data name="Nome" xml:space="preserve"><value>Name</value></data>
+  <data name="Dados do exame" xml:space="preserve"><value>Exam data</value></data>
+  <data name="Tipo" xml:space="preserve"><value>Type</value></data>
+  <data name="Data" xml:space="preserve"><value>Date</value></data>
+  <data name="Médico" xml:space="preserve"><value>Physician</value></data>
+  <data name="Ver laudo" xml:space="preserve"><value>View report</value></data>
+  <data name="Ver imagens" xml:space="preserve"><value>View images</value></data>
+  <data name="Baixar PDF" xml:space="preserve"><value>Download PDF</value></data>
+  <data name="QR Code" xml:space="preserve"><value>QR Code</value></data>
+  <data name="Imprimir imagens" xml:space="preserve"><value>Print images</value></data>
+
+  <data name="Laudo médico" xml:space="preserve"><value>Medical report</value></data>
+  <data name="Assinado digitalmente (ICP-Brasil)" xml:space="preserve"><value>Digitally signed (ICP-Brasil)</value></data>
+  <data name="Adendo" xml:space="preserve"><value>Addendum</value></data>
+  <data name="Voltar" xml:space="preserve"><value>Back</value></data>
+
+  <data name="Imagens do exame" xml:space="preserve"><value>Exam images</value></data>
+  <data name="Navegar" xml:space="preserve"><value>Scroll</value></data>
+  <data name="Zoom" xml:space="preserve"><value>Zoom</value></data>
+  <data name="Contraste" xml:space="preserve"><value>Contrast</value></data>
+  <data name="Pan" xml:space="preserve"><value>Pan</value></data>
+  <data name="Resetar" xml:space="preserve"><value>Reset</value></data>
+  <data name="Carregando imagens..." xml:space="preserve"><value>Loading images...</value></data>
+  <data name="Powered by DWV" xml:space="preserve"><value>Powered by DWV</value></data>
+
+  <data name="Compartilhar exame" xml:space="preserve"><value>Share exam</value></data>
+  <data name="Escaneie o QR Code para compartilhar o acesso com o médico." xml:space="preserve"><value>Scan the QR Code to share access with the physician.</value></data>
+  <data name="QR code do exame" xml:space="preserve"><value>Exam QR code</value></data>
+  <data name="Copiar link" xml:space="preserve"><value>Copy link</value></data>
+  <data name="Link copiado!" xml:space="preserve"><value>Link copied!</value></data>
+
+  <data name="Preparando seu laudo" xml:space="preserve"><value>Preparing your report</value></data>
+  <data name="Seu laudo está sendo recuperado do arquivo. Em breve estará disponível para download." xml:space="preserve"><value>Your report is being retrieved from archive. It will be available for download shortly.</value></data>
+  <data name="Solicitado" xml:space="preserve"><value>Requested</value></data>
+  <data name="ok" xml:space="preserve"><value>ok</value></data>
+  <data name="Em preparação" xml:space="preserve"><value>Preparing</value></data>
+  <data name="Pronto" xml:space="preserve"><value>Ready</value></data>
+  <data name="pendente" xml:space="preserve"><value>pending</value></data>
+  <data name="Receber notificação por e-mail" xml:space="preserve"><value>Receive email notification</value></data>
+  <data name="email@exemplo.com" xml:space="preserve"><value>email@example.com</value></data>
+  <data name="Confirmar" xml:space="preserve"><value>Confirm</value></data>
+
+  <data name="Central de Ajuda" xml:space="preserve"><value>Help Center</value></data>
+  <data name="Perguntas frequentes" xml:space="preserve"><value>Frequently asked questions</value></data>
+  <data name="Contato da clínica" xml:space="preserve"><value>Clinic contact</value></data>
+  <data name="Telefone" xml:space="preserve"><value>Phone</value></data>
+  <data name="E-mail" xml:space="preserve"><value>Email</value></data>
+  <data name="Como acessar meu exame" xml:space="preserve"><value>How to access my exam</value></data>
+  <data name="Informe número de protocolo e data de nascimento." xml:space="preserve"><value>Enter protocol number and date of birth.</value></data>
+  <data name="Ou use CPF e código de acesso temporário." xml:space="preserve"><value>Or use CPF and temporary access code.</value></data>
+  <data name="Abra laudo, imagens, PDF e compartilhamento via QR Code." xml:space="preserve"><value>Open report, images, PDF and QR sharing.</value></data>
+  <data name="Como acesso meu exame?" xml:space="preserve"><value>How do I access my exam?</value></data>
+  <data name="Informe número de protocolo e data de nascimento na tela inicial." xml:space="preserve"><value>Enter protocol number and date of birth on the home page.</value></data>
+  <data name="Não tenho protocolo. O que faço?" xml:space="preserve"><value>I do not have the protocol number. What now?</value></data>
+  <data name="Solicite código de acesso na recepção da clínica e entre com CPF + código." xml:space="preserve"><value>Ask reception for an access code and sign in with CPF + code.</value></data>
+  <data name="Posso baixar o laudo em PDF?" xml:space="preserve"><value>Can I download the report as PDF?</value></data>
+  <data name="Sim. No painel do exame, clique em Baixar PDF." xml:space="preserve"><value>Yes. In the exam dashboard, click Download PDF.</value></data>
+
+  <data name="Termos e Condições" xml:space="preserve"><value>Terms and Conditions</value></data>
+  <data name="Estes Termos e Condições disciplinam o uso do Portal do Paciente da clínica para consulta de laudos e imagens médicas." xml:space="preserve"><value>These Terms and Conditions govern the use of the clinic's Patient Portal for reports and medical images.</value></data>
+  <data name="1. Objeto" xml:space="preserve"><value>1. Scope</value></data>
+  <data name="O portal permite ao paciente visualizar e compartilhar resultados em caráter informativo e assistencial." xml:space="preserve"><value>The portal allows patients to view and share exam results for care-related purposes.</value></data>
+  <data name="2. Forma de acesso" xml:space="preserve"><value>2. Access method</value></data>
+  <data name="O acesso ocorre por número de protocolo e data de nascimento, ou por CPF e código temporário." xml:space="preserve"><value>Access is granted by protocol number + birth date or CPF + temporary code.</value></data>
+  <data name="3. Responsabilidades do usuário" xml:space="preserve"><value>3. User responsibilities</value></data>
+  <data name="O usuário deve manter seus dados de acesso em sigilo e utilizar as informações de forma legítima." xml:space="preserve"><value>Users must keep access data confidential and use information lawfully.</value></data>
+  <data name="4. Assinatura e integridade" xml:space="preserve"><value>4. Signature and integrity</value></data>
+  <data name="Laudos podem ser assinados digitalmente e o documento original não é alterado após conclusão." xml:space="preserve"><value>Reports may be digitally signed and are not altered after conclusion.</value></data>
+  <data name="5. Disponibilidade" xml:space="preserve"><value>5. Availability</value></data>
+  <data name="Laudos antigos podem entrar em recuperação de arquivo, com disponibilização posterior." xml:space="preserve"><value>Older reports may require archive retrieval before download is available.</value></data>
+  <data name="6. Disposições finais" xml:space="preserve"><value>6. Final provisions</value></data>
+  <data name="Ao usar o portal, o paciente declara ciência destes termos e da política de privacidade." xml:space="preserve"><value>By using the portal, patients acknowledge these terms and the privacy policy.</value></data>
+  <data name="Voltar para login" xml:space="preserve"><value>Back to sign in</value></data>
+
+  <data name="Política de Privacidade" xml:space="preserve"><value>Privacy Policy</value></data>
+  <data name="Esta política descreve como dados pessoais são tratados no Portal do Paciente em conformidade com a LGPD." xml:space="preserve"><value>This policy explains how personal data is processed in the Patient Portal under applicable privacy law.</value></data>
+  <data name="1. Dados tratados" xml:space="preserve"><value>1. Processed data</value></data>
+  <data name="Dados de identificação, dados de exame, metadados de acesso e preferências essenciais." xml:space="preserve"><value>Identification data, exam data, access metadata and essential preferences.</value></data>
+  <data name="2. Finalidade" xml:space="preserve"><value>2. Purpose</value></data>
+  <data name="Permitir acesso seguro a laudos/imagens e comunicações relacionadas ao resultado." xml:space="preserve"><value>To provide secure access to reports/images and related communications.</value></data>
+  <data name="3. Base legal" xml:space="preserve"><value>3. Legal basis</value></data>
+  <data name="Execução de serviços em saúde, obrigações legais e proteção da vida e da saúde." xml:space="preserve"><value>Healthcare service execution, legal obligations, and life/health protection.</value></data>
+  <data name="4. Compartilhamento" xml:space="preserve"><value>4. Sharing</value></data>
+  <data name="Compartilhamento apenas com operadores necessários para prestação do serviço." xml:space="preserve"><value>Data is shared only with operators required for service delivery.</value></data>
+  <data name="5. Retenção e segurança" xml:space="preserve"><value>5. Retention and security</value></data>
+  <data name="Dados armazenados pelo período aplicável com controles técnicos de segurança." xml:space="preserve"><value>Data is retained for required periods with technical safeguards in place.</value></data>
+  <data name="6. Direitos do titular" xml:space="preserve"><value>6. Data subject rights</value></data>
+  <data name="O titular pode exercer direitos previstos na LGPD pelos canais oficiais da clínica." xml:space="preserve"><value>Patients may exercise their legal rights through official clinic channels.</value></data>
+</root>

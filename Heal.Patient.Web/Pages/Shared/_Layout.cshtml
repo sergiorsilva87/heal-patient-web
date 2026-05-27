@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="@System.Globalization.CultureInfo.CurrentUICulture.Name">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - @L["Portal do Paciente"]</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="~/css/portal.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    @{
+        var returnUrl = $"{Context.Request.Path}{Context.Request.QueryString}";
+        var currentCulture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+        var currentLanguageLabel = currentCulture switch
+        {
+            "en" => "English",
+            "es" => "Español",
+            _ => "Português (BR)"
+        };
+        var currentLanguageFlag = currentCulture switch
+        {
+            "en" => "🇺🇸",
+            "es" => "🇪🇸",
+            _ => "🇧🇷"
+        };
+    }
+    <a class="skip-link" href="#main-content">@L["Pular para o conteúdo principal"]</a>
+    <header class="portal-navbar sticky-top">
+        <nav class="navbar navbar-expand-md" aria-label="@L["Navegação principal"]">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" asp-page="/Index">
+                    <span class="portal-logo-mark">WM</span>
+                    <span class="fw-semibold">@L["Clínica Imagem Saúde"]</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#portalActions" aria-controls="portalActions" aria-expanded="false" aria-label="@L["Abrir menu"]">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-end" id="portalActions">
+                    <div class="d-flex flex-column flex-md-row align-items-stretch align-items-md-center gap-2 portal-header-actions mt-3 mt-md-0">
+                        <div class="btn-group btn-group-sm" role="group" aria-label="@L["Ajuste de fonte"]">
+                            <button id="font-decrease" class="btn btn-outline-secondary" type="button" aria-label="@L["Diminuir fonte"]">A-</button>
+                            <button id="font-increase" class="btn btn-outline-secondary" type="button" aria-label="@L["Aumentar fonte"]">A+</button>
+                        </div>
+
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="/Help">@L["Ajuda"]</a>
+
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-outline-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                @L["Idioma atual"]: @currentLanguageFlag @currentLanguageLabel
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" asp-page="/Culture" asp-route-culture="pt-BR" asp-route-returnUrl="@returnUrl">🇧🇷 Português (BR)</a></li>
+                                <li><a class="dropdown-item" asp-page="/Culture" asp-route-culture="es" asp-route-returnUrl="@returnUrl">🇪🇸 Español</a></li>
+                                <li><a class="dropdown-item" asp-page="/Culture" asp-route-culture="en" asp-route-returnUrl="@returnUrl">🇺🇸 English</a></li>
+                            </ul>
+                        </div>
+
+                        @if ((bool?)ViewData["ShowExit"] == true)
+                        {
+                            <a class="btn btn-sm btn-outline-danger" asp-page="/Index">@L["Sair"]</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" class="container py-4 flex-grow-1" tabindex="-1">
+        @RenderBody()
+    </main>
+
+    <footer class="mt-auto border-top bg-white">
+        <div class="container py-3 d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <small class="text-muted">&copy; 2026 @L["Clínica Imagem Saúde"]</small>
+            <div class="d-flex gap-3">
+                <a asp-page="/Terms">@L["Termos"]</a>
+                <a asp-page="/Privacy">@L["Privacidade"]</a>
+            </div>
+        </div>
+    </footer>
+
+    <partial name="_CookieConsentPartial" />
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

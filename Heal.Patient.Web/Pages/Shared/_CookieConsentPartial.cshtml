@@ -1,0 +1,30 @@
+<div id="cookieBanner" class="cookie-banner d-none">
+    <div class="container py-3 d-flex justify-content-between align-items-center portal-stack-mobile">
+        <p class="mb-0 me-3 small">
+      @L["Utilizamos cookies essenciais para funcionamento do portal. Ao continuar, você concorda com nossa política e termos."]
+      <a class="link-light" asp-page="/Terms">@L["Termos"]</a>
+            /
+      <a class="link-light" asp-page="/Privacy">@L["Privacidade"]</a>
+        </p>
+    <button id="cookieAccept" class="btn btn-sm btn-light">@L["Aceitar"]</button>
+    </div>
+</div>
+
+<script>
+(function () {
+  const key = 'portal_cookie_accept';
+  const banner = document.getElementById('cookieBanner');
+  const btn = document.getElementById('cookieAccept');
+
+  if (!banner || !btn) return;
+
+  if (!localStorage.getItem(key)) {
+    banner.classList.remove('d-none');
+  }
+
+  btn.addEventListener('click', function () {
+    localStorage.setItem(key, '1');
+    banner.classList.add('d-none');
+  });
+})();
+</script>
