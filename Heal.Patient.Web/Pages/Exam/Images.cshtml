@@ -10,9 +10,19 @@
         <h1 class="h4 mb-1">@L["Imagens do exame"]</h1>
         <p class="text-muted mb-0 small">dwv v0.36.3</p>
     </div>
-    <button id="print" class="btn btn-primary" type="button">
-        <i class="bi bi-printer me-1"></i>@L["Imprimir imagens"]
-    </button>
+    <div class="d-flex gap-2 flex-wrap">
+        @if (Model.AllowImageZipDownload)
+        {
+            <a class="btn btn-outline-secondary"
+               asp-page="/Exam/Images"
+               asp-page-handler="DownloadImagesZip">
+                <i class="bi bi-file-zip me-1"></i>@L["Baixar imagens (ZIP)"]
+            </a>
+        }
+        <button id="print" class="btn btn-primary" type="button">
+            <i class="bi bi-printer me-1"></i>@L["Imprimir imagens"]
+        </button>
+    </div>
 </div>
 
 <section class="portal-print-shell" role="region" aria-label="@L["Imagens do exame"]">

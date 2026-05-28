@@ -16,7 +16,6 @@ public class ReportModel : PageModel
 
     public string Protocol => MockData.Exam.Protocol;
     public string ExamDate => MockData.Exam.Date;
-    public string ReportDate => MockData.Exam.ReportDate;
     public string Procedure => MockData.Exam.Procedure;
     public string ExamType => MockData.Exam.Type;
     public string AccessNumber => MockData.Exam.AccessNumber;
@@ -43,8 +42,7 @@ public class ReportModel : PageModel
     public bool AllowExternalPhysicianReviewRequest => MockData.TenantPortalPolicy.AllowExternalPhysicianReviewRequest;
     public bool AllowPatientOrGuardianReviewRequest => MockData.TenantPortalPolicy.AllowPatientOrGuardianReviewRequest;
     public bool AllowInternalPhysicianReviewRequest => MockData.TenantPortalPolicy.AllowInternalPhysicianReviewRequest;
-    public string ReportBody => MockData.ReportBody;
-    public IReadOnlyList<MockData.AddendumItem> Addendums => MockData.Addendums;
+    public IReadOnlyList<MockData.ReportItem> Reports { get; private set; } = [];
     public IReadOnlyList<MockData.ExamAttachmentItem> Attachments { get; private set; } = [];
 
     [BindProperty]
@@ -59,7 +57,17 @@ public class ReportModel : PageModel
     public void OnGet()
     {
         _auditTrail.Track(Protocol, "report-viewed", Request.Path);
+        Reports = MockData.GetReportsByProtocol(Protocol);
         Attachments = MockData.GetAttachmentsByProtocol(Protocol);
+    }
+
+    public IActionResult OnGetDownloadAllReportsZip()
+    {
+        _auditTrail.Track(Protocol, "reports-all-zip-downloaded", Request.Path);
+        var reportCount = MockData.GetReportsByProtocol(Protocol).Count;
+        var content = Encoding.UTF8.GetBytes(
+            $"Mock ZIP with all {reportCount} reports and attachments for protocol {Protocol}");
+        return File(content, "application/zip", $"{Protocol}-laudos.zip");
     }
 
     public IActionResult OnGetDownloadAttachment(string attachmentId)

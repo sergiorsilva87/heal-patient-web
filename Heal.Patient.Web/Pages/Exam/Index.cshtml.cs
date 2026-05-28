@@ -12,17 +12,20 @@ public class IndexModel : PageModel
     public IReadOnlyList<MockData.ExamItem> PagedExams { get; private set; } = [];
     public int CurrentPage { get; private set; } = 1;
     public int PageSize { get; private set; } = 10;
+    public bool ShowArchived { get; private set; }
     public int TotalItems { get; private set; }
     public int TotalPages { get; private set; }
     public int StartItemNumber { get; private set; }
     public int EndItemNumber { get; private set; }
 
-    public void OnGet(int page = 1, int pageSize = 10)
+    public void OnGet(int page = 1, int pageSize = 10, bool showArchived = false)
     {
         var allowedPageSizes = new[] { 5, 10, 20, 50 };
         PageSize = allowedPageSizes.Contains(pageSize) ? pageSize : 10;
+        ShowArchived = showArchived;
 
         var ordered = MockData.Exams
+            .Where(x => showArchived || x.StatusCode != "cold-storage")
             .OrderByDescending(x => x.ExamDate)
             .ToList();
 

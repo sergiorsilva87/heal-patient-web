@@ -24,93 +24,149 @@
         "room-assistant" => L["Auxiliar de sala"],
         _ => role
     };
+
+    string ModalityAbbr(string t)
+    {
+        if (t.Contains("Ressonancia", StringComparison.OrdinalIgnoreCase)) return "RM";
+        if (t.Contains("Tomografia", StringComparison.OrdinalIgnoreCase)) return "TC";
+        if (t.Contains("Ultrassom", StringComparison.OrdinalIgnoreCase)) return "US";
+        if (t.Contains("Raio-X", StringComparison.OrdinalIgnoreCase) ||
+            t.Contains("Radiografia", StringComparison.OrdinalIgnoreCase)) return "RX";
+        if (t.Contains("Mamografia", StringComparison.OrdinalIgnoreCase)) return "MG";
+        if (t.Contains("Densitometria", StringComparison.OrdinalIgnoreCase)) return "DO";
+        if (t.Contains("Cintilografia", StringComparison.OrdinalIgnoreCase)) return "CS";
+        return "EX";
+    }
 }
 
 <div class="portal-actions-bar mb-3">
     <a class="btn btn-outline-secondary" asp-page="/Exam/Index">
         <i class="bi bi-arrow-left me-1"></i>@L["Voltar"]
     </a>
-    <a class="btn btn-primary ms-auto" asp-page="/Exam/ColdStorage">
-        <i class="bi bi-download me-1"></i>@L["Baixar PDF"]
-    </a>
+    @if (Model.Reports.Count > 1)
+    {
+        <a class="btn btn-outline-primary ms-auto" asp-page="/Exam/Report" asp-page-handler="DownloadAllReportsZip">
+            <i class="bi bi-file-zip me-1"></i>@L["Baixar todos os laudos (ZIP)"]
+        </a>
+    }
+    else if (Model.Reports.Count == 1)
+    {
+        <a class="btn btn-outline-primary ms-auto" asp-page="/Exam/ColdStorage">
+            <i class="bi bi-download me-1"></i>@L["Baixar PDF"]
+        </a>
+    }
 </div>
 
-<article class="portal-card p-4 p-md-5">
-    <header class="portal-report-header portal-report-header-compact mb-3">
-        <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
-            <div class="d-flex align-items-center gap-2">
-                <span class="portal-logo-mark">WM</span>
-                <div>
-                    <h2 class="h6 mb-0">@Model.FacilityName</h2>
-                    <p class="small mb-0 text-muted">@L["CNPJ"]: @Model.FacilityCnpj</p>
+@{ int reportCount = Model.Reports.Count; }
+@for (int ri = 0; ri < reportCount; ri++)
+{
+    var report = Model.Reports[ri];
+    <article class="portal-card p-4 p-md-5 mb-4">
+        <header class="portal-report-header portal-report-header-compact mb-3">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                <div class="d-flex align-items-center gap-2">
+                    <span class="portal-logo-mark">WM</span>
+                    <div>
+                        <h2 class="h6 mb-0">@Model.FacilityName</h2>
+                        <p class="small mb-0 text-muted">@L["CNPJ"]: @Model.FacilityCnpj</p>
+                    </div>
+                </div>
+                <span class="small text-muted">@L["Cabeçalho institucional"]</span>
+            </div>
+
+            <h1 class="h5 mb-2">@L["Laudo médico"]</h1>
+
+            <div class="portal-report-meta-lines small">
+                <p class="mb-1"><strong>@L["Nome"]:</strong> @Model.PatientName | <strong>@L["ID do paciente"]:</strong> @Model.PatientId | <strong>@L["Data de nascimento"]:</strong> @Model.PatientBirthDate</p>
+                <p class="mb-0"><strong>@L["ID do paciente"]:</strong> @Model.PatientId | <strong>@L["Número de acesso"]:</strong> @Model.AccessNumber | <strong>@L["Modalidade"]:</strong> <abbr title="@Model.ExamType">@ModalityAbbr(Model.ExamType)</abbr> | <strong>@L["Data do estudo"]:</strong> @Model.ExamDate</p>
+            </div>
+        </header>
+
+        <section class="mb-3">
+            <h2 class="h6 mb-2">@L["Dados clínicos do exame"]</h2>
+            <div class="portal-clinical-grid small">
+                <p><strong>@L["Procedimento"]:</strong> @Model.Procedure</p>
+                <p><strong>@L["Unidade"]:</strong> @Model.UnitName</p>
+                <p>
+                    <strong>@L["Médico executor"]:</strong> @Model.PerformingDoctor<br />
+                    <span class="text-muted" style="font-size: var(--fs-xs)">CRM @Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf</span>
+                </p>
+                <p>
+                    <strong>@L["Médico solicitante"]:</strong> @Model.RequestingDoctor
+                    @if (!string.IsNullOrWhiteSpace(Model.RequestingDoctorCrm))
+                    {
+                        <br /><span class="text-muted" style="font-size: var(--fs-xs)">CRM @Model.RequestingDoctorCrm / @Model.RequestingDoctorCrmUf</span>
+                    }
+                </p>
+                <p>
+                    <strong>@L["Técnico de radiologia"]:</strong> @Model.RadiologyTechnicianName
+                    <span class="text-muted" style="font-size: var(--fs-xs)"> · CRTR @Model.RadiologyTechnicianRegistry / @Model.RadiologyTechnicianRegistryUf</span>
+                </p>
+            </div>
+        </section>
+
+        <hr class="portal-report-separator my-3" />
+
+        <div class="mb-3 d-flex justify-content-between align-items-start flex-wrap gap-2">
+            <div>
+                @if (reportCount > 1)
+                {
+                    <span class="portal-chip mb-2">@L["Laudo {0} de {1}", ri + 1, reportCount]</span>
+                }
+                <div class="small text-muted mt-1">
+                    <strong>@L["Data do laudo"]:</strong> @report.ReportDateText |
+                    <strong>@L["Médico executor"]:</strong> @report.PerformingDoctor |
+                    @report.PerformingDoctorCrm / @report.PerformingDoctorCrmUf
                 </div>
             </div>
-            <span class="small text-muted">@L["Cabeçalho institucional"]</span>
+            <a class="btn btn-outline-primary btn-sm" asp-page="/Exam/ColdStorage">
+                <i class="bi bi-download me-1"></i>@L["Baixar PDF"]
+            </a>
         </div>
 
-        <h1 class="h5 mb-2">@L["Laudo médico"]</h1>
+        <section class="mb-4">@Html.Raw(report.Body)</section>
 
-        <div class="portal-report-meta-lines small">
-            <p class="mb-1"><strong>@L["Nome"]:</strong> @Model.PatientName | <strong>@L["ID do paciente"]:</strong> @Model.PatientId | <strong>@L["Data de nascimento"]:</strong> @Model.PatientBirthDate</p>
-            <p class="mb-0"><strong>@L["Número de protocolo"]:</strong> @Model.Protocol | <strong>@L["Número de acesso"]:</strong> @Model.AccessNumber | <strong>@L["Tipo"]:</strong> @Model.ExamType | <strong>@L["Data do exame"]:</strong> @Model.ExamDate | <strong>@L["Data do laudo"]:</strong> @Model.ReportDate</p>
-        </div>
-    </header>
+        <section class="portal-signature-block mb-4" aria-label="@L["Assinatura do médico"]">
+            <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
+            <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
+            <p class="small text-muted mb-0">
+                @L["Assinado por"]: @report.PerformingDoctor | CRM @report.PerformingDoctorCrm / @report.PerformingDoctorCrmUf
+            </p>
+        </section>
 
-    <section class="mb-3">
-        <h2 class="h6 mb-2">@L["Dados clínicos do exame"]</h2>
-        <div class="portal-clinical-grid small">
-            <p><strong>@L["Procedimento"]:</strong> @Model.Procedure</p>
-            <p><strong>@L["Unidade"]:</strong> @Model.UnitName</p>
-            <p><strong>@L["Médico executor"]:</strong> @Model.PerformingDoctor</p>
-            <p><strong>@L["CRM do médico executor"]:</strong> @Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf</p>
-            <p><strong>@L["Médico solicitante"]:</strong> @Model.RequestingDoctor</p>
-            <p><strong>@L["CRM do médico solicitante"]:</strong> @(string.IsNullOrWhiteSpace(Model.RequestingDoctorCrm) ? L["Não informado no DICOM"] : $"{Model.RequestingDoctorCrm} / {Model.RequestingDoctorCrmUf}")</p>
-            <p><strong>@L["Técnico de radiologia"]:</strong> @Model.RadiologyTechnicianName</p>
-            <p><strong>@L["Registro do técnico (CRTR)"]:</strong> @Model.RadiologyTechnicianRegistry / @Model.RadiologyTechnicianRegistryUf</p>
-        </div>
-    </section>
-
-    <section class="mb-4">@Html.Raw(Model.ReportBody)</section>
-
-    <section class="portal-signature-block mb-4" aria-label="@L["Assinatura do médico"]">
-        <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
-        <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
-        <p class="small text-muted mb-0">
-            @L["Assinado por"]: @Model.PerformingDoctor | @L["CRM do médico executor"]: @Model.PerformingDoctorCrm / @Model.PerformingDoctorCrmUf
-        </p>
-    </section>
-
-    <hr class="portal-report-separator my-4" />
-
-    <section class="mb-3">
-        <h2 class="h6">@L["Adendo"]</h2>
-
-        @foreach (var addendum in Model.Addendums)
+        @if (report.Addendums.Count > 0)
         {
-            <article class="p-0 mb-2">
-                <p class="small text-muted mb-2">
-                    <strong>@L["Data do adendo"]:</strong> @addendum.DateText |
-                    <strong>@L["Médico do adendo"]:</strong> @addendum.PhysicianName |
-                    <strong>@L["CRM do médico do adendo"]:</strong> @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
-                </p>
-                <p class="mb-0">@addendum.Body</p>
-                <div class="portal-signature-block mt-3" aria-label="@L["Assinatura do médico"]">
-                    <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
-                    <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
-                    <p class="small text-muted mb-0">
-                        @L["Assinado por"]: @addendum.PhysicianName | @L["CRM do médico do adendo"]: @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
-                    </p>
-                </div>
-            </article>
+            <hr class="portal-report-separator my-4" />
+            <section class="mb-3">
+                <h2 class="h6">@L["Adendo"]</h2>
+                @foreach (var addendum in report.Addendums)
+                {
+                    <article class="p-0 mb-2">
+                        <p class="small text-muted mb-2">
+                            <strong>@L["Data do adendo"]:</strong> @addendum.DateText |
+                            <strong>@L["Médico do adendo"]:</strong> @addendum.PhysicianName |
+                            CRM @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
+                        </p>
+                        <p class="mb-0">@addendum.Body</p>
+                        <div class="portal-signature-block mt-3" aria-label="@L["Assinatura do médico"]">
+                            <p class="small mb-1 fw-semibold">@L["Assinatura do médico"]</p>
+                            <img class="portal-signature-image" src="~/img/signature-doctor.svg" alt="@L["Assinatura do médico"]" />
+                            <p class="small text-muted mb-0">
+                                @L["Assinado por"]: @addendum.PhysicianName | CRM @addendum.PhysicianCrm / @addendum.PhysicianCrmUf
+                            </p>
+                        </div>
+                    </article>
+                }
+            </section>
         }
-    </section>
 
-    <footer class="portal-report-footer p-3 mt-3">
-        <p class="mb-1"><strong>@L["Rodapé institucional"]:</strong> @Model.FacilityFooterText</p>
-        <p class="mb-1">@Model.FacilityAddress</p>
-        <p class="mb-0">@L["Telefone"]: @Model.FacilityPhone | @L["E-mail"]: @Model.FacilityEmail</p>
-    </footer>
-</article>
+        <footer class="portal-report-footer p-3 mt-3">
+            <p class="mb-1"><strong>@L["Rodapé institucional"]:</strong> @Model.FacilityFooterText</p>
+            <p class="mb-1">@Model.FacilityAddress</p>
+            <p class="mb-0">@L["Telefone"]: @Model.FacilityPhone | @L["E-mail"]: @Model.FacilityEmail</p>
+        </footer>
+    </article>
+}
 
 <section class="portal-card p-4 mt-4">
     <h2 class="h6 mb-3"><i class="bi bi-paperclip me-1"></i>@L["Arquivos anexados ao exame"]</h2>
@@ -139,18 +195,16 @@
                         <tr>
                             <td>@attachment.AttachedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
                             <td>
-                                    <div class="portal-file-cell">
-                                        <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
-                                        <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
-                                    </div>
+                                <div class="portal-file-cell">
+                                    <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
+                                    <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
+                                </div>
                             </td>
                             <td>@attachment.UploadedByName</td>
                             <td>@RoleLabel(attachment.UploadedByRole)</td>
                             <td class="text-end">
-                                          <a class="btn btn-sm btn-outline-primary portal-table-action"
-                                   asp-page="/Exam/Report"
-                                   asp-page-handler="DownloadAttachment"
-                                   asp-route-attachmentId="@attachment.Id">
+                                <a class="btn btn-sm btn-outline-primary portal-table-action" asp-page="/Exam/Report"
+                                   asp-page-handler="DownloadAttachment" asp-route-attachmentId="@attachment.Id">
                                     <i class="bi bi-download me-1"></i>@L["Baixar arquivo"]
                                 </a>
                             </td>
@@ -198,9 +252,15 @@
                 @if (Model.AllowPatientSupportingDocumentsUpload)
                 {
                     <p class="small text-muted mb-2">@L["Envie documentos em anexo que ainda não foram liberados para laudo."]</p>
-                    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSupportingDocument" class="d-flex flex-column gap-2">
-                        <input class="form-control" type="file" name="SupportingDocumentFile" />
-                        <button class="btn btn-outline-primary align-self-start" type="submit">@L["Enviar documento"]</button>
+                    <form method="post" enctype="multipart/form-data" asp-page-handler="UploadSupportingDocument"
+                          class="d-flex flex-column gap-2">
+                        <label for="supportingDocFile" class="btn btn-outline-secondary text-start text-truncate w-100">
+                            <i class="bi bi-paperclip me-1"></i><span id="supportingDocLabel">@L["Selecionar arquivo"]</span>
+                        </label>
+                        <input id="supportingDocFile" type="file" class="visually-hidden" name="SupportingDocumentFile"
+                               data-label-default="@L["Selecionar arquivo"]"
+                               onchange="document.getElementById('supportingDocLabel').textContent = this.files[0]?.name ?? this.dataset.labelDefault" />
+                        <button class="btn btn-outline-primary" type="submit">@L["Enviar documento"]</button>
                     </form>
                 }
                 else
@@ -214,7 +274,8 @@
             <div class="portal-subcard p-3">
                 <h3 class="h6 mb-2">@L["Solicitar revisão de laudo"]</h3>
                 <p class="small text-muted mb-2">@L["As regras de revisão podem variar conforme configuração do tenant."]</p>
-                @if (Model.AllowExternalPhysicianReviewRequest || Model.AllowPatientOrGuardianReviewRequest || Model.AllowInternalPhysicianReviewRequest)
+                @if (Model.AllowExternalPhysicianReviewRequest || Model.AllowPatientOrGuardianReviewRequest ||
+                Model.AllowInternalPhysicianReviewRequest)
                 {
                     <form method="post" asp-page-handler="SubmitReviewRequest" class="d-flex flex-column gap-2">
                         <label class="form-label mb-0" for="reviewRequesterType">@L["Solicitante"]</label>

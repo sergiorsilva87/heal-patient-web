@@ -6,8 +6,22 @@ public static class MockData
         bool AllowPatientSupportingDocumentsUpload,
         bool AllowExternalPhysicianReviewRequest,
         bool AllowPatientOrGuardianReviewRequest,
-        bool AllowInternalPhysicianReviewRequest
+        bool AllowInternalPhysicianReviewRequest,
+        bool AllowImageZipDownload
     );
+
+    public sealed record ReportItem(
+        string Id,
+        DateOnly ReportDate,
+        string PerformingDoctor,
+        string PerformingDoctorCrm,
+        string PerformingDoctorCrmUf,
+        string Body,
+        IReadOnlyList<AddendumItem> Addendums
+    )
+    {
+        public string ReportDateText => ReportDate.ToString("dd/MM/yyyy");
+    }
 
     public sealed record AddendumItem(
         DateOnly Date,
@@ -67,7 +81,8 @@ public static class MockData
         AllowPatientSupportingDocumentsUpload: true,
         AllowExternalPhysicianReviewRequest: true,
         AllowPatientOrGuardianReviewRequest: true,
-        AllowInternalPhysicianReviewRequest: true
+        AllowInternalPhysicianReviewRequest: true,
+        AllowImageZipDownload: true
     );
 
     public static readonly ExamItem[] Exams =
@@ -318,19 +333,111 @@ public static class MockData
             "CRTR 003912",
             "SP",
             "images-available"
+        ),
+        new(
+            "2022005501",
+            "Ressonancia Magnetica do Ombro Esquerdo",
+            new DateOnly(2024, 11, 12),
+            new DateOnly(2024, 11, 13),
+            "Ressonancia magnetica do ombro esquerdo sem contraste",
+            "ACC-00189431",
+            "Dr. Carlos Eduardo Mendes",
+            "CRM 123456",
+            "SP",
+            "Dr. Marcelo Tavares",
+            null,
+            null,
+            "Unidade Centro",
+            "Tec. Julia Nascimento",
+            "CRTR 004587",
+            "SP",
+            "cold-storage"
+        ),
+        new(
+            "2022005488",
+            "Tomografia Computadorizada de Cranio",
+            new DateOnly(2024, 8, 3),
+            new DateOnly(2024, 8, 4),
+            "Tomografia computadorizada de cranio sem contraste",
+            "ACC-00174802",
+            "Dra. Ana Paula Monteiro",
+            "CRM 998877",
+            "SP",
+            "Dra. Fernanda Rios",
+            null,
+            null,
+            "Unidade Norte",
+            "Tec. Rafael Moreira",
+            "CRTR 003912",
+            "SP",
+            "cold-storage"
+        ),
+        new(
+            "2021003722",
+            "Cintilografia Ossea",
+            new DateOnly(2023, 6, 17),
+            new DateOnly(2023, 6, 19),
+            "Cintilografia ossea de corpo inteiro",
+            "ACC-00141055",
+            "Dr. Tiago Nery",
+            "CRM 667788",
+            "SP",
+            "Dra. Marina Alves",
+            null,
+            null,
+            "Unidade Centro",
+            "Tec. Bianca Faria",
+            "CRTR 001822",
+            "SP",
+            "cold-storage"
         )
     ];
 
-    public static readonly AddendumItem[] Addendums =
+    public static readonly ReportItem[] Reports =
     [
         new(
-            new DateOnly(2026, 5, 24),
+            "RPT-2024001234-1",
+            new DateOnly(2026, 5, 23),
+            "Dr. Carlos Eduardo Mendes",
+            "CRM 123456",
+            "SP",
+            "<p><strong>Tecnica:</strong> Exame realizado em equipamento de 1.5T, com sequencias multiplanares ponderadas em T1, T2, FLAIR, difusao e T1 pos-contraste.</p>" +
+            "<p><strong>Achados:</strong> Nao ha evidencias de lesoes expansivas, restricao a difusao ou hemorragia aguda. Espacos de Virchow-Robin proeminentes em regiao dos ganglios da base, variante da normalidade. Sistema ventricular de dimensoes normais. Sulcos e giros corticais preservados para a faixa etaria.</p>" +
+            "<p><strong>Conclusao:</strong> Exame dentro dos limites da normalidade para a faixa etaria.</p>",
+            [
+                new(
+                    new DateOnly(2026, 5, 24),
+                    "Dra. Helena Passos",
+                    "CRM 145920",
+                    "SP",
+                    "Correlacionar com quadro clinico e exames laboratoriais previos, a criterio medico."
+                )
+            ]
+        ),
+        new(
+            "RPT-2024001234-2",
+            new DateOnly(2026, 5, 25),
             "Dra. Helena Passos",
             "CRM 145920",
             "SP",
-            "Correlacionar com quadro clinico e exames laboratoriais previos, a criterio medico."
+            "<p><strong>Segunda opiniao medica:</strong> Realizada revisao das imagens a pedido do medico solicitante.</p>" +
+            "<p><strong>Achados complementares:</strong> Identificada discreta hiperintensidade em T2/FLAIR na substancia branca periventricular bilateral, de distribuicao simetrica e aspecto inespecifico — compativel com alteracoes microvasculares cronicas de pequeno porte (Fazekas grau 1).</p>" +
+            "<p><strong>Conclusao:</strong> Recomendo correlacao com fatores de risco cardiovascular, quadro clinico e acompanhamento por neurologista.</p>",
+            []
         )
     ];
+
+    public static IReadOnlyList<ReportItem> GetReportsByProtocol(string protocol)
+    {
+        // In real system, filter by protocol; mock returns all reports for the main exam.
+        return Reports;
+    }
+
+    public static ReportItem? GetReportById(string reportId)
+    {
+        return Reports.FirstOrDefault(r =>
+            string.Equals(r.Id, reportId, StringComparison.OrdinalIgnoreCase));
+    }
 
     public static readonly ExamAttachmentItem[] ExamAttachments =
     [
@@ -409,13 +516,6 @@ public static class MockData
         public const string Email = "contato@clinicaimagemsaude.com.br";
         public const string FooterText = "Documento emitido eletronicamente pelo Portal do Paciente.";
     }
-
-    public const string ReportBody = @"
-<p><strong>Tecnica:</strong> Exame realizado em equipamento de 1.5T, com sequencias multiplanares.</p>
-<p><strong>Achados:</strong> Nao ha evidencias de lesoes expansivas, restricao a difusao ou hemorragia aguda.</p>
-<p><strong>Conclusao:</strong> Exame dentro dos limites da normalidade para a faixa etaria.</p>";
-
-    public static string AddendumBody => Addendums[0].Body;
 
     public static readonly (string Question, string Answer)[] Faq =
     [
