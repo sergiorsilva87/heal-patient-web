@@ -39,9 +39,22 @@ public class ReportModel : PageModel
     public string FacilityPhone => MockData.Facility.Phone;
     public string FacilityEmail => MockData.Facility.Email;
     public string FacilityFooterText => MockData.Facility.FooterText;
+    public bool AllowPatientSupportingDocumentsUpload => MockData.TenantPortalPolicy.AllowPatientSupportingDocumentsUpload;
+    public bool AllowExternalPhysicianReviewRequest => MockData.TenantPortalPolicy.AllowExternalPhysicianReviewRequest;
+    public bool AllowPatientOrGuardianReviewRequest => MockData.TenantPortalPolicy.AllowPatientOrGuardianReviewRequest;
+    public bool AllowInternalPhysicianReviewRequest => MockData.TenantPortalPolicy.AllowInternalPhysicianReviewRequest;
     public string ReportBody => MockData.ReportBody;
     public IReadOnlyList<MockData.AddendumItem> Addendums => MockData.Addendums;
     public IReadOnlyList<MockData.ExamAttachmentItem> Attachments { get; private set; } = [];
+
+    [BindProperty]
+    public string ReviewRequesterType { get; set; } = string.Empty;
+
+    [BindProperty]
+    public string ReviewRequestReason { get; set; } = string.Empty;
+
+    [BindProperty]
+    public IFormFile? SupportingDocumentFile { get; set; }
 
     public void OnGet()
     {
@@ -62,5 +75,51 @@ public class ReportModel : PageModel
 
         var fileBody = $"Mock attachment file for {attachment.FileName} ({attachment.ExamProtocol})";
         return File(Encoding.UTF8.GetBytes(fileBody), attachment.ContentType, attachment.FileName);
+    }
+
+    public IActionResult OnPostSubmitReviewRequest()
+    {
+        if (string.IsNullOrWhiteSpace(ReviewRequesterType) || string.IsNullOrWhiteSpace(ReviewRequestReason))
+        {
+            TempData["ReviewRequestError"] = "required";
+            return RedirectToPage();
+        }
+
+        var isAllowed = ReviewRequesterType switch
+        {
+            "external-physician" => AllowExternalPhysicianReviewRequest,
+            "patient-or-guardian" => AllowPatientOrGuardianReviewRequest,
+            "internal-physician" => AllowInternalPhysicianReviewRequest,
+            _ => false
+        };
+
+        if (!isAllowed)
+        {
+            TempData["ReviewRequestError"] = "not-allowed";
+            return RedirectToPage();
+        }
+
+        _auditTrail.Track(Protocol, "report-review-requested", Request.Path);
+        TempData["ReviewRequestSuccess"] = "ok";
+        return RedirectToPage();
+    }
+
+    public IActionResult OnPostUploadSupportingDocument()
+    {
+        if (!AllowPatientSupportingDocumentsUpload)
+        {
+            TempData["SupportingDocumentError"] = "not-allowed";
+            return RedirectToPage();
+        }
+
+        if (SupportingDocumentFile is null || SupportingDocumentFile.Length == 0)
+        {
+            TempData["SupportingDocumentError"] = "required";
+            return RedirectToPage();
+        }
+
+        _auditTrail.Track(Protocol, "supporting-document-uploaded", Request.Path);
+        TempData["SupportingDocumentSuccess"] = SupportingDocumentFile.FileName;
+        return RedirectToPage();
     }
 }

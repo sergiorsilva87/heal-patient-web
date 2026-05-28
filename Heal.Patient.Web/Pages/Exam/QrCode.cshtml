@@ -5,25 +5,29 @@
     ViewData["ShowExit"] = true;
 }
 
-<section class="portal-card bg-white p-4 text-center">
-    <h1 class="h4">@L["Compartilhar exame"]</h1>
-    <p class="text-muted">@L["Escaneie o QR Code para compartilhar o acesso com o médico."]</p>
+<section class="portal-card p-4 p-md-5 text-center">
+    <h1 class="h4 fw-bold mb-2">@L["Compartilhar exame"]</h1>
+    <p class="text-muted mb-4" style="font-size: var(--fs-sm)">@L["Escaneie o QR Code para compartilhar o acesso com o médico."]</p>
 
-    <div class="d-flex justify-content-center my-3">
-      <div class="qr-placeholder" aria-label="@L["QR code do exame"]"></div>
+    <div class="d-flex justify-content-center my-4">
+        <div class="qr-placeholder" aria-label="@L["QR code do exame"]"></div>
     </div>
 
-    <div class="portal-share-link-bar mb-3">
-      <div id="qrLink" class="portal-share-link-text" role="textbox" aria-readonly="true">@Model.ShareLink</div>
+    <div class="portal-share-link-bar mb-2">
+        <div id="qrLink" class="portal-share-link-text" role="textbox" aria-readonly="true">@Model.ShareLink</div>
         <button class="portal-copy-btn" type="button" id="copyBtn" title="@L["Copiar link"]" aria-label="@L["Copiar link"]">
-        <span class="portal-copy-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">@L["Copiar link"]</span>
+            <span class="portal-copy-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">@L["Copiar link"]</span>
         </button>
     </div>
 
-      <div id="copyFeedback" class="small text-success d-none" aria-live="polite">@L["Link copiado!"]</div>
+    <div id="copyFeedback" class="small text-success d-none" aria-live="polite">
+        <i class="bi bi-check-circle-fill me-1"></i>@L["Link copiado!"]
+    </div>
 
-      <a class="portal-back-link mt-4 d-block" asp-page="/Exam/Index">@L["Voltar"]</a>
+    <p class="mt-4 mb-0">
+        <a class="portal-back-link" asp-page="/Exam/Index"><i class="bi bi-arrow-left me-1"></i>@L["Voltar"]</a>
+    </p>
 </section>
 
 @section Scripts {

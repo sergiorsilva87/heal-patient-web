@@ -14,6 +14,8 @@ Responsável por autenticação, sessões e permissões — inclusive para o ace
 - [ ] Registrar evento quando o paciente **visualiza imagens do exame** (`PatientImagesViewed`)
 - [ ] Registrar evento quando o paciente **imprime imagens do exame** (`PatientImagesPrinted`)
 - [ ] Registrar evento quando o paciente **faz download de anexos do exame** (`PatientExamAttachmentDownloaded`)
+- [ ] Registrar evento quando há **solicitação de revisão de laudo** pelo portal (`PatientReportReviewRequested`)
+- [ ] Registrar evento quando há **envio de documento complementar** no portal (`PatientSupportingDocumentUploaded`)
 - [ ] Padronizar payload de auditoria com: `TenantId`, `PatientId`, `AccessionNumber`, `ReportId/StudyInstanceUid`, `TimestampUtc`, `SourceIp`, `UserAgent`
 - [ ] Definir política de retenção e consulta operacional da trilha de auditoria para o portal do paciente
 
@@ -63,6 +65,16 @@ Responsável por autenticação, sessões e permissões — inclusive para o ace
 
 ---
 
+## BC-PLT-02 — TenantContext
+
+Responsável por contrato/licenciamento e configuração por tenant do comportamento do portal.
+
+- [ ] Configurar por tenant se o **paciente pode enviar documentos complementares** no portal
+- [ ] Configurar por tenant quais perfis podem **solicitar revisão de laudo**: médico solicitante externo, paciente/responsável legal e médico solicitante interno
+- [ ] Versionar e auditar mudanças nessas regras por tenant
+
+---
+
 ## BC-PLT-03 — PatientContext
 
 Responsável pelo cadastro e dados do paciente compartilhados entre módulos.
@@ -100,6 +112,12 @@ Responsável pela criação, revisão, assinatura e ciclo de vida do laudo médi
 - [ ] Adendo publicado deve acionar entrega atualizada ao paciente e ao médico solicitante (via DeliveryContext e NotificationContext)
 - [ ] Exibir cabeçalho e rodapé institucionais no laudo visualizado pelo paciente (dados da clínica/hospital)
 
+### Solicitação de revisão do laudo
+
+- [ ] Permitir solicitação de revisão de laudo pelo médico solicitante interno (corpo clínico), quando habilitado no tenant
+- [ ] Permitir solicitação de revisão de laudo por médico solicitante externo, paciente e responsável legal, conforme regras do tenant
+- [ ] Registrar motivo da revisão e encaminhar solicitação para workflow clínico de revisão
+
 ---
 
 ## BC-SUP-02 — DeliveryContext
@@ -132,6 +150,8 @@ Responsável pela entrega do resultado ao paciente e ao médico solicitante — 
 - [ ] Disponibilizar imagens do exame para visualização no portal via **DWV (DICOM Web Viewer)** — viewer zero-footprint, sem instalação, funciona em qualquer navegador (GPL-3.0)
 - [ ] Permitir **impressão das imagens do exame** diretamente pelo portal via DWV — layout de impressão otimizado para papel com identificação do paciente e do exame
 - [ ] Gerar **QR Code** vinculado ao resultado do exame
+- [ ] Permitir upload de **documentos complementares** no portal (quando habilitado no tenant) para suporte à revisão de laudo
+- [ ] Associar documentos complementares ao exame e à solicitação de revisão correspondente
 
 ### Download de laudo — tratamento de armazenamento frio (cold storage)
 

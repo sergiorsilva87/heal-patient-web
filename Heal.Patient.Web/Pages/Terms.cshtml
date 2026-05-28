@@ -4,30 +4,70 @@
     ViewData["Title"] = L["Termos e Condições"];
 }
 
-<article class="portal-card bg-white p-4">
-    <h1 class="h4">@L["Termos e Condições"]</h1>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-9 col-xl-8">
+        <div class="portal-card p-4 p-lg-5">
 
-    <p>@L["Estes Termos e Condições disciplinam o uso do Portal do Paciente da clínica para consulta de laudos e imagens médicas."]</p>
+            <h1 class="h3 fw-bold mb-2">@L["Termos e Condições"]</h1>
+            <p class="text-muted mb-4" style="font-size: var(--fs-sm)">
+                @L["Estes Termos e Condições disciplinam o uso do Portal do Paciente da clínica para consulta de laudos e imagens médicas."]
+            </p>
 
-    <h2 class="h6 mt-4">@L["1. Objeto"]</h2>
-    <p>@L["O portal permite ao paciente visualizar e compartilhar resultados em caráter informativo e assistencial."]</p>
+            <nav class="portal-toc mb-5" aria-label="Índice">
+                <ol>
+                    <li><a href="#t1">@L["1. Objeto"]</a></li>
+                    <li><a href="#t2">@L["2. Forma de acesso"]</a></li>
+                    <li><a href="#t3">@L["3. Responsabilidades do usuário"]</a></li>
+                    <li><a href="#t4">@L["4. Assinatura e integridade"]</a></li>
+                    <li><a href="#t5">@L["5. Disponibilidade"]</a></li>
+                    <li><a href="#t6">@L["6. Disposições finais"]</a></li>
+                </ol>
+            </nav>
 
-    <h2 class="h6 mt-4">@L["2. Forma de acesso"]</h2>
-    <p>@L["O acesso ocorre por número de protocolo e data de nascimento, ou por CPF e código temporário."]</p>
+            <article class="portal-prose">
+                <h2 id="t1" class="portal-anchor-heading">
+                    @L["1. Objeto"]
+                    <a class="anchor-link" href="#t1" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["O portal permite ao paciente visualizar e compartilhar resultados em caráter informativo e assistencial."]</p>
 
-    <h2 class="h6 mt-4">@L["3. Responsabilidades do usuário"]</h2>
-    <p>@L["O usuário deve manter seus dados de acesso em sigilo e utilizar as informações de forma legítima."]</p>
+                <h2 id="t2" class="portal-anchor-heading">
+                    @L["2. Forma de acesso"]
+                    <a class="anchor-link" href="#t2" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["O acesso ocorre por número de protocolo e data de nascimento, ou por CPF e código temporário."]</p>
 
-    <h2 class="h6 mt-4">@L["4. Assinatura e integridade"]</h2>
-    <p>@L["Laudos podem ser assinados digitalmente e o documento original não é alterado após conclusão."]</p>
+                <h2 id="t3" class="portal-anchor-heading">
+                    @L["3. Responsabilidades do usuário"]
+                    <a class="anchor-link" href="#t3" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["O usuário deve manter seus dados de acesso em sigilo e utilizar as informações de forma legítima."]</p>
 
-    <h2 class="h6 mt-4">@L["5. Disponibilidade"]</h2>
-    <p>@L["Laudos antigos podem entrar em recuperação de arquivo, com disponibilização posterior."]</p>
+                <h2 id="t4" class="portal-anchor-heading">
+                    @L["4. Assinatura e integridade"]
+                    <a class="anchor-link" href="#t4" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Laudos podem ser assinados digitalmente e o documento original não é alterado após conclusão."]</p>
 
-    <h2 class="h6 mt-4">@L["6. Disposições finais"]</h2>
-    <p>@L["Ao usar o portal, o paciente declara ciência destes termos e da política de privacidade."]</p>
+                <h2 id="t5" class="portal-anchor-heading">
+                    @L["5. Disponibilidade"]
+                    <a class="anchor-link" href="#t5" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Laudos antigos podem entrar em recuperação de arquivo, com disponibilização posterior."]</p>
 
-    <div class="mt-4">
-        <a class="btn btn-outline-primary" asp-page="/Index">@L["Voltar para login"]</a>
+                <h2 id="t6" class="portal-anchor-heading">
+                    @L["6. Disposições finais"]
+                    <a class="anchor-link" href="#t6" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Ao usar o portal, o paciente declara ciência destes termos e da política de privacidade."]</p>
+            </article>
+
+            <div class="mt-5 pt-3" style="border-top: 1px solid var(--border)">
+                <a class="portal-back-link" asp-page="/Index">
+                    <i class="bi bi-arrow-left me-1"></i>@L["Voltar para login"]
+                </a>
+            </div>
+
+        </div>
     </div>
-</article>
+</div>

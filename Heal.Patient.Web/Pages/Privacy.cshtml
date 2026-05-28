@@ -4,30 +4,70 @@
     ViewData["Title"] = L["Política de Privacidade"];
 }
 
-<article class="portal-card bg-white p-4">
-    <h1 class="h4">@L["Política de Privacidade"]</h1>
+<div class="row justify-content-center">
+    <div class="col-12 col-lg-9 col-xl-8">
+        <div class="portal-card p-4 p-lg-5">
 
-    <p>@L["Esta política descreve como dados pessoais são tratados no Portal do Paciente em conformidade com a LGPD."]</p>
+            <h1 class="h3 fw-bold mb-2">@L["Política de Privacidade"]</h1>
+            <p class="text-muted mb-4" style="font-size: var(--fs-sm)">
+                @L["Esta política descreve como dados pessoais são tratados no Portal do Paciente em conformidade com a LGPD."]
+            </p>
 
-    <h2 class="h6 mt-4">@L["1. Dados tratados"]</h2>
-    <p>@L["Dados de identificação, dados de exame, metadados de acesso e preferências essenciais."]</p>
+            <nav class="portal-toc mb-5" aria-label="Índice">
+                <ol>
+                    <li><a href="#p1">@L["1. Dados tratados"]</a></li>
+                    <li><a href="#p2">@L["2. Finalidade"]</a></li>
+                    <li><a href="#p3">@L["3. Base legal"]</a></li>
+                    <li><a href="#p4">@L["4. Compartilhamento"]</a></li>
+                    <li><a href="#p5">@L["5. Retenção e segurança"]</a></li>
+                    <li><a href="#p6">@L["6. Direitos do titular"]</a></li>
+                </ol>
+            </nav>
 
-    <h2 class="h6 mt-4">@L["2. Finalidade"]</h2>
-    <p>@L["Permitir acesso seguro a laudos/imagens e comunicações relacionadas ao resultado."]</p>
+            <article class="portal-prose">
+                <h2 id="p1" class="portal-anchor-heading">
+                    @L["1. Dados tratados"]
+                    <a class="anchor-link" href="#p1" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Dados de identificação, dados de exame, metadados de acesso e preferências essenciais."]</p>
 
-    <h2 class="h6 mt-4">@L["3. Base legal"]</h2>
-    <p>@L["Execução de serviços em saúde, obrigações legais e proteção da vida e da saúde."]</p>
+                <h2 id="p2" class="portal-anchor-heading">
+                    @L["2. Finalidade"]
+                    <a class="anchor-link" href="#p2" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Permitir acesso seguro a laudos/imagens e comunicações relacionadas ao resultado."]</p>
 
-    <h2 class="h6 mt-4">@L["4. Compartilhamento"]</h2>
-    <p>@L["Compartilhamento apenas com operadores necessários para prestação do serviço."]</p>
+                <h2 id="p3" class="portal-anchor-heading">
+                    @L["3. Base legal"]
+                    <a class="anchor-link" href="#p3" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Execução de serviços em saúde, obrigações legais e proteção da vida e da saúde."]</p>
 
-    <h2 class="h6 mt-4">@L["5. Retenção e segurança"]</h2>
-    <p>@L["Dados armazenados pelo período aplicável com controles técnicos de segurança."]</p>
+                <h2 id="p4" class="portal-anchor-heading">
+                    @L["4. Compartilhamento"]
+                    <a class="anchor-link" href="#p4" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Compartilhamento apenas com operadores necessários para prestação do serviço."]</p>
 
-    <h2 class="h6 mt-4">@L["6. Direitos do titular"]</h2>
-    <p>@L["O titular pode exercer direitos previstos na LGPD pelos canais oficiais da clínica."]</p>
+                <h2 id="p5" class="portal-anchor-heading">
+                    @L["5. Retenção e segurança"]
+                    <a class="anchor-link" href="#p5" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["Dados armazenados pelo período aplicável com controles técnicos de segurança."]</p>
 
-    <div class="mt-4">
-        <a class="btn btn-outline-primary" asp-page="/Index">@L["Voltar para login"]</a>
+                <h2 id="p6" class="portal-anchor-heading">
+                    @L["6. Direitos do titular"]
+                    <a class="anchor-link" href="#p6" aria-hidden="true">#</a>
+                </h2>
+                <p>@L["O titular pode exercer direitos previstos na LGPD pelos canais oficiais da clínica."]</p>
+            </article>
+
+            <div class="mt-5 pt-3" style="border-top: 1px solid var(--border)">
+                <a class="portal-back-link" asp-page="/Index">
+                    <i class="bi bi-arrow-left me-1"></i>@L["Voltar para login"]
+                </a>
+            </div>
+
+        </div>
     </div>
-</article>
+</div>

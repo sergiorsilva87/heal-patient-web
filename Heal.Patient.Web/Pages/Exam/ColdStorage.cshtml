@@ -26,71 +26,91 @@
     };
 }
 
-<section class="portal-card bg-white p-4">
-    <h1 class="h4">@L["Preparando seu laudo"]</h1>
-    <p class="text-muted">@L["Seu laudo está sendo recuperado do arquivo. Em breve estará disponível para download."]</p>
+<section class="portal-card p-4 p-md-5 mb-4">
+    <h1 class="h4 fw-bold mb-1">@L["Preparando seu laudo"]</h1>
+    <p class="text-muted" style="font-size: var(--fs-sm)">@L["Seu laudo está sendo recuperado do arquivo. Em breve estará disponível para download."]</p>
 
-    <ol class="list-group list-group-numbered mb-4">
-        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Solicitado"] <span class="badge text-bg-success">@L["ok"]</span></li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Em preparação"] <span class="spinner-border spinner-border-sm"></span></li>
-        <li class="list-group-item d-flex justify-content-between align-items-center">@L["Pronto"] <span class="badge text-bg-secondary">@L["pendente"]</span></li>
+    <ol class="portal-timeline list-unstyled my-4" aria-label="@L["Preparando seu laudo"]">
+        <li class="portal-timeline-step is-done">
+            <span class="portal-timeline-dot"><i class="bi bi-check"></i></span>
+            <span class="portal-timeline-label">@L["Solicitado"]</span>
+            <span class="portal-timeline-hint">@L["ok"]</span>
+        </li>
+        <li class="portal-timeline-step is-active">
+            <span class="portal-timeline-dot">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </span>
+            <span class="portal-timeline-label">@L["Em preparação"]</span>
+            <span class="portal-timeline-hint">@L["Estamos finalizando o processamento. Tente novamente em alguns minutos."]</span>
+        </li>
+        <li class="portal-timeline-step">
+            <span class="portal-timeline-dot">3</span>
+            <span class="portal-timeline-label">@L["Pronto"]</span>
+            <span class="portal-timeline-hint">@L["pendente"]</span>
+        </li>
     </ol>
 
-    <label class="form-label">@L["Receber notificação por e-mail"]</label>
-    <div class="input-group mb-3">
-        <input class="form-control" type="email" placeholder="@L["email@exemplo.com"]" />
-        <button class="btn btn-outline-primary" type="button">@L["Confirmar"]</button>
+    <div class="portal-subcard p-3">
+        <label class="form-label fw-semibold" for="coldEmail">
+            <i class="bi bi-envelope me-1"></i>@L["Receber notificação por e-mail"]
+        </label>
+        <div class="input-group">
+            <input id="coldEmail" class="form-control form-control-lg" type="email" placeholder="@L["email@exemplo.com"]" />
+            <button class="btn btn-primary" type="button">@L["Confirmar"]</button>
+        </div>
     </div>
-
-    <section class="mt-4">
-        <h2 class="h5">@L["Arquivos anexados ao exame"]</h2>
-
-        @if (Model.Attachments.Count == 0)
-        {
-            <p class="text-muted mb-0">@L["Nenhum arquivo anexado ao exame."]</p>
-        }
-        else
-        {
-            <div class="table-responsive">
-                <table class="table table-sm align-middle">
-                    <thead>
-                        <tr>
-                            <th>@L["Data do anexo"]</th>
-                            <th>@L["Arquivo"]</th>
-                            <th>@L["Anexado por"]</th>
-                            <th>@L["Perfil"]</th>
-                            <th class="text-end">@L["Download"]</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var attachment in Model.Attachments)
-                        {
-                            var kind = FileKind(attachment.FileName);
-                            <tr>
-                                <td>@attachment.AttachedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
-                                <td>
-                                    <div class="portal-file-cell">
-                                        <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
-                                        <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
-                                    </div>
-                                </td>
-                                <td>@attachment.UploadedByName</td>
-                                <td>@RoleLabel(attachment.UploadedByRole)</td>
-                                <td class="text-end">
-                                                <a class="btn btn-sm btn-outline-primary portal-table-action"
-                                       asp-page="/Exam/ColdStorage"
-                                       asp-page-handler="DownloadAttachment"
-                                       asp-route-attachmentId="@attachment.Id">
-                                        @L["Baixar arquivo"]
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        }
-    </section>
-
-    <a class="btn btn-outline-secondary" asp-page="/Exam/Index">@L["Voltar"]</a>
 </section>
+
+<section class="portal-panel p-4 mb-4">
+    <h2 class="h5 mb-3"><i class="bi bi-paperclip me-1"></i>@L["Arquivos anexados ao exame"]</h2>
+
+    @if (Model.Attachments.Count == 0)
+    {
+        <p class="text-muted mb-0">@L["Nenhum arquivo anexado ao exame."]</p>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-sm align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th>@L["Data do anexo"]</th>
+                        <th>@L["Arquivo"]</th>
+                        <th>@L["Anexado por"]</th>
+                        <th>@L["Perfil"]</th>
+                        <th class="text-end">@L["Download"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var attachment in Model.Attachments)
+                    {
+                        var kind = FileKind(attachment.FileName);
+                        <tr>
+                            <td>@attachment.AttachedAt.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>
+                                <div class="portal-file-cell">
+                                    <span class="portal-file-icon portal-file-icon-@kind" aria-hidden="true">@kind.ToUpperInvariant()</span>
+                                    <span class="portal-file-name" title="@attachment.FileName">@attachment.FileName</span>
+                                </div>
+                            </td>
+                            <td>@attachment.UploadedByName</td>
+                            <td>@RoleLabel(attachment.UploadedByRole)</td>
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-primary portal-table-action"
+                                   asp-page="/Exam/ColdStorage"
+                                   asp-page-handler="DownloadAttachment"
+                                   asp-route-attachmentId="@attachment.Id">
+                                    <i class="bi bi-download me-1"></i>@L["Baixar arquivo"]
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>
+
+<p class="mb-0">
+    <a class="portal-back-link" asp-page="/Exam/Index"><i class="bi bi-arrow-left me-1"></i>@L["Voltar"]</a>
+</p>

@@ -5,13 +5,18 @@
     ViewData["ShowExit"] = true;
 }
 
-<section class="portal-card bg-white p-4">
-    <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-        <h1 class="h4 mb-0">@L["Imagens do exame"]</h1>
-        <button id="print" class="btn btn-outline-dark" type="button">@L["Imprimir imagens"]</button>
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+    <div>
+        <h1 class="h4 mb-1">@L["Imagens do exame"]</h1>
+        <p class="text-muted mb-0 small">dwv v0.36.3</p>
     </div>
+    <button id="print" class="btn btn-primary" type="button">
+        <i class="bi bi-printer me-1"></i>@L["Imprimir imagens"]
+    </button>
+</div>
 
-    <div class="portal-dwv-shell" role="region" aria-label="@L["Imagens do exame"]">
+<section class="portal-print-shell" role="region" aria-label="@L["Imagens do exame"]">
+    <div class="portal-dwv-shell">
         <div class="portal-dwv-canvas-wrap">
             <div class="portal-dwv-overlay portal-dwv-overlay-left-top">
                 <div>20120215_ASLtest_human [M]</div>
@@ -31,28 +36,29 @@
         </div>
 
         <div class="portal-dwv-controls">
-            <div class="portal-dwv-line">
-                <label class="me-2">Position:</label>
-                <input type="text" class="form-control form-control-sm portal-dwv-input" readonly value="" />
-            </div>
-
-            <div class="portal-dwv-line portal-dwv-wrap">
-                <label class="me-2">Layout:</label>
-                <select class="form-select form-select-sm portal-dwv-select" disabled>
-                    <option>1*1</option>
-                </select>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Reset views</button>
-                <label class="d-flex align-items-center gap-1 mb-0"><input type="checkbox" disabled /> Smoothing</label>
-            </div>
-
-            <div class="portal-dwv-line portal-dwv-wrap">
-                <span class="me-2">Resample:</span>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>X+</button>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Y+</button>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Z+</button>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Match</button>
-                <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Reset</button>
-            </div>
+            <fieldset class="portal-dwv-box">
+                <legend>Position / Layout / Resample</legend>
+                <div class="portal-dwv-line">
+                    <label class="me-2">Position:</label>
+                    <input type="text" class="form-control form-control-sm portal-dwv-input" readonly value="" />
+                </div>
+                <div class="portal-dwv-line portal-dwv-wrap">
+                    <label class="me-2">Layout:</label>
+                    <select class="form-select form-select-sm portal-dwv-select" disabled>
+                        <option>1*1</option>
+                    </select>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Reset views</button>
+                    <label class="d-flex align-items-center gap-1 mb-0"><input type="checkbox" disabled /> Smoothing</label>
+                </div>
+                <div class="portal-dwv-line portal-dwv-wrap mb-0">
+                    <span class="me-2">Resample:</span>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>X+</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Y+</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Z+</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Match</button>
+                    <button class="btn btn-sm btn-outline-secondary" type="button" disabled>Reset</button>
+                </div>
+            </fieldset>
 
             <fieldset class="portal-dwv-box">
                 <legend>Binders</legend>
@@ -79,20 +85,24 @@
                 <label><input type="radio" name="dwv-tool" disabled /> Filter</label>
             </fieldset>
 
-            <div class="portal-dwv-grid">
-                <div class="portal-dwv-cell"><strong>Id</strong><div>0</div></div>
-                <div class="portal-dwv-cell"><strong>LG0</strong><div>- A C S</div></div>
-                <div class="portal-dwv-cell"><strong>Contrast</strong><div>width 884,0 | center 424,0</div></div>
-                <div class="portal-dwv-cell"><strong>Preset</strong><div>wl: Algo1 | cm: plain</div></div>
-                <div class="portal-dwv-cell"><strong>Alpha</strong><div>opacity 1,000</div></div>
-                <div class="portal-dwv-cell"><strong>Alpha Range</strong><div>min 0,000 | max 1130</div></div>
-            </div>
+            <fieldset class="portal-dwv-box">
+                <legend>Sliders</legend>
+                <div class="portal-dwv-grid">
+                    <div class="portal-dwv-cell"><strong>Id</strong><div>0</div></div>
+                    <div class="portal-dwv-cell"><strong>LG0</strong><div>- A C S</div></div>
+                    <div class="portal-dwv-cell"><strong>Contrast</strong><div>width 884,0 | center 424,0</div></div>
+                    <div class="portal-dwv-cell"><strong>Preset</strong><div>wl: Algo1 | cm: plain</div></div>
+                    <div class="portal-dwv-cell"><strong>Alpha</strong><div>opacity 1,000</div></div>
+                    <div class="portal-dwv-cell"><strong>Alpha Range</strong><div>min 0,000 | max 1130</div></div>
+                </div>
+            </fieldset>
         </div>
     </div>
-
-    <small class="text-muted d-block mt-2">About: dwv v0.36.3</small>
-    <a class="btn btn-outline-secondary mt-3" asp-page="/Exam/Index">@L["Voltar"]</a>
 </section>
+
+<p class="mt-3 mb-0">
+    <a class="portal-back-link" asp-page="/Exam/Index"><i class="bi bi-arrow-left me-1"></i>@L["Voltar"]</a>
+</p>
 
 @section Scripts {
     <script>

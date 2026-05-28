@@ -2,6 +2,13 @@ namespace Heal.Patient.Web.Services;
 
 public static class MockData
 {
+    public sealed record PortalPolicy(
+        bool AllowPatientSupportingDocumentsUpload,
+        bool AllowExternalPhysicianReviewRequest,
+        bool AllowPatientOrGuardianReviewRequest,
+        bool AllowInternalPhysicianReviewRequest
+    );
+
     public sealed record AddendumItem(
         DateOnly Date,
         string PhysicianName,
@@ -53,7 +60,15 @@ public static class MockData
         public const string PatientId = "PAT-000245981";
         public const string BirthDate = "15/03/1975";
         public const string CpfMasked = "***.456.***-12";
+        public const string LegalGuardianName = "Joao Aparecido da Silva";
     }
+
+    public static readonly PortalPolicy TenantPortalPolicy = new(
+        AllowPatientSupportingDocumentsUpload: true,
+        AllowExternalPhysicianReviewRequest: true,
+        AllowPatientOrGuardianReviewRequest: true,
+        AllowInternalPhysicianReviewRequest: true
+    );
 
     public static readonly ExamItem[] Exams =
     [

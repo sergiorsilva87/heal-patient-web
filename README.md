@@ -42,6 +42,16 @@ Cada clínica ou hospital que usa a plataforma tem o seu próprio portal, com a 
 - Os anexos são apresentados em tabela com: data/hora do anexo, nome do arquivo, nome de quem anexou, perfil/role e ação de download.
 - O portal exibe um ícone visual coerente com o tipo de arquivo (ex.: PDF, Word, imagem), facilitando identificação rápida pelo paciente.
 
+### Solicitação de revisão de laudo e anexos complementares
+
+- O portal pode disponibilizar um fluxo de **solicitação de revisão de laudo** com motivo informado pelo solicitante.
+- Dependendo das regras do tenant, a solicitação de revisão pode ser aberta por:
+	- médico solicitante **externo** (fora do corpo clínico);
+	- **paciente** ou responsável legal;
+	- médico solicitante **interno** (que faz parte do corpo clínico).
+- O portal também pode permitir ao paciente o envio de **documentos complementares em anexo** que ainda não foram liberados no laudo.
+- Essas capacidades são **configuráveis por tenant** e podem variar entre clínicas/hospitais (habilitado ou desabilitado por perfil e por tipo de ação).
+
 ### Visualização das imagens médicas
 
 - As imagens do exame (raio-X, tomografia, ressonância etc.) podem ser visualizadas diretamente no navegador, sem instalar software adicional.

@@ -188,4 +188,25 @@
   <data name="Rodapé institucional" xml:space="preserve"><value>Institutional footer</value></data>
   <data name="Assinatura do médico" xml:space="preserve"><value>Physician signature</value></data>
   <data name="Assinado por" xml:space="preserve"><value>Signed by</value></data>
+  <data name="Solicitações e documentos complementares" xml:space="preserve"><value>Requests and supporting documents</value></data>
+  <data name="Documento enviado com sucesso: {0}" xml:space="preserve"><value>Document successfully uploaded: {0}</value></data>
+  <data name="Selecione um documento para enviar." xml:space="preserve"><value>Select a document to upload.</value></data>
+  <data name="Este tenant não permite envio de documentos pelo paciente." xml:space="preserve"><value>This tenant does not allow patient document uploads.</value></data>
+  <data name="Solicitação de revisão enviada com sucesso." xml:space="preserve"><value>Review request sent successfully.</value></data>
+  <data name="Preencha o solicitante e o motivo da revisão." xml:space="preserve"><value>Fill in requester type and review reason.</value></data>
+  <data name="Este tenant não permite solicitação de revisão para o perfil informado." xml:space="preserve"><value>This tenant does not allow review requests for the selected requester profile.</value></data>
+  <data name="Enviar documento complementar" xml:space="preserve"><value>Upload supporting document</value></data>
+  <data name="Envie documentos em anexo que ainda não foram liberados para laudo." xml:space="preserve"><value>Upload supporting documents not yet available in the released report.</value></data>
+  <data name="Enviar documento" xml:space="preserve"><value>Upload document</value></data>
+  <data name="Envio de documentos pelo paciente está desabilitado para este tenant." xml:space="preserve"><value>Patient document upload is disabled for this tenant.</value></data>
+  <data name="Solicitar revisão de laudo" xml:space="preserve"><value>Request report review</value></data>
+  <data name="As regras de revisão podem variar conforme configuração do tenant." xml:space="preserve"><value>Review rules may vary according to tenant configuration.</value></data>
+  <data name="Solicitante" xml:space="preserve"><value>Requester</value></data>
+  <data name="Selecione" xml:space="preserve"><value>Select</value></data>
+  <data name="Médico solicitante externo (fora do corpo clínico)" xml:space="preserve"><value>External referring physician (outside clinical staff)</value></data>
+  <data name="Paciente ou responsável legal" xml:space="preserve"><value>Patient or legal guardian</value></data>
+  <data name="Médico solicitante interno (corpo clínico)" xml:space="preserve"><value>Internal referring physician (clinical staff)</value></data>
+  <data name="Motivo da revisão" xml:space="preserve"><value>Review reason</value></data>
+  <data name="Enviar solicitação de revisão" xml:space="preserve"><value>Send review request</value></data>
+  <data name="Solicitação de revisão está desabilitada para este tenant." xml:space="preserve"><value>Report review requests are disabled for this tenant.</value></data>
 </root>

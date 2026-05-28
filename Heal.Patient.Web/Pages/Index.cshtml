@@ -7,77 +7,129 @@
     var cpfActive = Model.ActiveTab == "cpf";
 }
 
-<section class="row justify-content-center">
-    <div class="col-12 col-lg-8 col-xl-7">
-        <article class="portal-card bg-white p-4 p-md-5">
-            <h1 class="h3 mb-2">@L["Acesse seu exame"]</h1>
-            <p class="text-muted mb-4">@L["Escolha uma forma de acesso abaixo."]</p>
-            <p class="small mb-4">@L["Você pode acessar por número de protocolo ou, se preferir, por CPF e código."]</p>
+<section class="d-flex align-items-center py-4 py-lg-0" style="min-height: calc(100vh - 140px)">
+    <div class="w-100">
+        <div class="container">
+            <div class="row justify-content-center align-items-center g-4 g-lg-5">
 
-            <div class="alert alert-info py-2 mb-4" role="note">
-                @L["Se não encontrar seu exame, toque em Ajuda."]
-            </div>
-
-            <ul class="nav nav-tabs portal-access-tabs mb-3" id="accessTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link @(protocolActive ? "active" : string.Empty)" id="protocol-tab" data-bs-toggle="tab" data-bs-target="#protocol-pane" type="button" role="tab" aria-controls="protocol-pane" aria-selected="@(protocolActive ? "true" : "false")">@L["Número de protocolo"]</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link @(cpfActive ? "active" : string.Empty)" id="cpf-tab" data-bs-toggle="tab" data-bs-target="#cpf-pane" type="button" role="tab" aria-controls="cpf-pane" aria-selected="@(cpfActive ? "true" : "false")">@L["CPF e código"]</button>
-                </li>
-            </ul>
-
-            <div class="tab-content" id="accessTabContent">
-                <div class="tab-pane fade @(protocolActive ? "show active" : string.Empty)" id="protocol-pane" role="tabpanel" aria-labelledby="protocol-tab" tabindex="0">
-                    <form method="post" asp-page-handler="Protocol" class="row g-3">
-                        @if (protocolActive && !ViewData.ModelState.IsValid)
-                        {
-                            <div class="col-12">
-                                <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
-                            </div>
-                        }
-
-                        <div class="col-12">
-                            <label asp-for="Protocol" class="form-label">@L["Número de protocolo"]</label>
-                            <input asp-for="Protocol" class="form-control" placeholder="2024001234" autocomplete="off" required />
-                            <span asp-validation-for="Protocol" class="text-danger"></span>
-                        </div>
-                        <div class="col-12">
-                            <label asp-for="BirthDate" class="form-label">@L["Data de nascimento"]</label>
-                            <input asp-for="BirthDate" class="form-control" type="date" max="@maxBirthDate" required />
-                            <span asp-validation-for="BirthDate" class="text-danger"></span>
-                        </div>
-                        <div class="col-12 d-grid">
-                            <button class="btn btn-primary" type="submit">@L["Acessar"]</button>
-                        </div>
-                    </form>
+                <div class="col-12 col-lg-5 text-center order-2 order-lg-1">
+                    <div class="d-flex justify-content-center mb-3">
+                        <svg viewBox="0 0 320 290" fill="none" xmlns="http://www.w3.org/2000/svg"
+                             style="width: min(260px, 75vw)" aria-hidden="true" focusable="false">
+                            <circle cx="160" cy="145" r="130" fill="var(--clr-primary-50)" />
+                            <rect x="84" y="64" width="168" height="190" rx="14" fill="#c7d2fe" opacity=".3" transform="translate(6,6)" />
+                            <rect x="84" y="64" width="168" height="190" rx="14" fill="white" stroke="var(--border)" stroke-width="1.5" />
+                            <rect x="84" y="64" width="168" height="46" rx="14" fill="var(--clr-primary-100)" />
+                            <rect x="84" y="97" width="168" height="13" rx="0" fill="var(--clr-primary-100)" />
+                            <rect x="100" y="74" width="26" height="26" rx="7" fill="var(--clr-primary-700)" />
+                            <rect x="134" y="78" width="80" height="8" rx="4" fill="var(--clr-primary-700)" opacity=".5" />
+                            <rect x="134" y="90" width="56" height="6" rx="3" fill="var(--clr-primary-700)" opacity=".3" />
+                            <rect x="100" y="124" width="136" height="7" rx="3.5" fill="var(--border)" />
+                            <rect x="100" y="138" width="110" height="7" rx="3.5" fill="var(--border)" />
+                            <rect x="100" y="152" width="126" height="7" rx="3.5" fill="var(--border)" />
+                            <rect x="100" y="166" width="96" height="7" rx="3.5" fill="var(--border)" />
+                            <polyline points="100,198 116,198 125,176 135,220 145,198 162,198 170,184 178,211 186,198 236,198"
+                                      stroke="var(--clr-primary-700)" stroke-width="2.5" fill="none"
+                                      stroke-linecap="round" stroke-linejoin="round" />
+                            <circle cx="252" cy="82" r="24" fill="white" stroke="var(--border)" stroke-width="1.5" />
+                            <circle cx="252" cy="82" r="18" fill="var(--clr-success-700)" />
+                            <polyline points="243,82 249,89 263,73" stroke="white" stroke-width="2.5"
+                                      fill="none" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <p class="text-muted px-lg-3" style="font-size: var(--fs-sm); max-width: 30ch; margin: 0 auto">
+                        @L["Você pode acessar por número de protocolo ou, se preferir, por CPF e código."]
+                    </p>
                 </div>
 
-                <div class="tab-pane fade @(cpfActive ? "show active" : string.Empty)" id="cpf-pane" role="tabpanel" aria-labelledby="cpf-tab" tabindex="0">
-                    <form method="post" asp-page-handler="Cpf" class="row g-3">
-                        @if (cpfActive && !ViewData.ModelState.IsValid)
-                        {
-                            <div class="col-12">
-                                <div class="alert alert-danger" role="alert" asp-validation-summary="All"></div>
-                            </div>
-                        }
+                <div class="col-12 col-md-9 col-lg-7 order-1 order-lg-2">
+                    <div class="portal-card p-4 p-lg-5">
+                        <h1 class="h4 fw-bold mb-1">@L["Acesse seu exame"]</h1>
+                        <p class="mb-4" style="color: var(--txt-muted); font-size: var(--fs-sm)">
+                            @L["Escolha uma forma de acesso abaixo."]
+                        </p>
 
-                        <div class="col-12">
-                            <label asp-for="Cpf" class="form-label">@L["CPF"]</label>
-                            <input asp-for="Cpf" class="form-control" placeholder="000.000.000-00" inputmode="numeric" autocomplete="off" required />
-                            <span asp-validation-for="Cpf" class="text-danger"></span>
+                        <div class="portal-pill-tabs mb-4" role="tablist" id="accessTab">
+                            <button class="portal-pill-tab @(protocolActive ? "active" : string.Empty)"
+                                    id="protocol-tab" data-bs-toggle="tab" data-bs-target="#protocol-pane"
+                                    type="button" role="tab" aria-controls="protocol-pane"
+                                    aria-selected="@(protocolActive ? "true" : "false")">
+                                <i class="bi bi-file-earmark-text"></i>
+                                @L["Número de protocolo"]
+                            </button>
+                            <button class="portal-pill-tab @(cpfActive ? "active" : string.Empty)"
+                                    id="cpf-tab" data-bs-toggle="tab" data-bs-target="#cpf-pane"
+                                    type="button" role="tab" aria-controls="cpf-pane"
+                                    aria-selected="@(cpfActive ? "true" : "false")">
+                                <i class="bi bi-person-vcard"></i>
+                                @L["CPF e código"]
+                            </button>
                         </div>
-                        <div class="col-12">
-                            <label asp-for="Code" class="form-label">@L["Código de acesso"]</label>
-                            <input asp-for="Code" class="form-control" placeholder="A1B2C3" autocomplete="off" required />
-                            <span asp-validation-for="Code" class="text-danger"></span>
+
+                        <div class="tab-content" id="accessTabContent">
+                            <div class="tab-pane fade @(protocolActive ? "show active" : string.Empty)" id="protocol-pane"
+                                 role="tabpanel" aria-labelledby="protocol-tab" tabindex="0">
+                                <form method="post" asp-page-handler="Protocol" class="row g-3">
+                                    @if (protocolActive && !ViewData.ModelState.IsValid)
+                                    {
+                                        <div class="col-12">
+                                            <div class="alert alert-danger py-2" role="alert" asp-validation-summary="All"></div>
+                                        </div>
+                                    }
+                                    <div class="col-12">
+                                        <label asp-for="Protocol" class="form-label">@L["Número de protocolo"]</label>
+                                        <input asp-for="Protocol" class="form-control form-control-lg"
+                                               placeholder="2024001234" autocomplete="off" required />
+                                        <span asp-validation-for="Protocol" class="form-text text-danger"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="BirthDate" class="form-label">@L["Data de nascimento"]</label>
+                                        <input asp-for="BirthDate" class="form-control form-control-lg"
+                                               type="date" max="@maxBirthDate" required />
+                                        <span asp-validation-for="BirthDate" class="form-text text-danger"></span>
+                                    </div>
+                                    <div class="col-12 d-grid mt-1">
+                                        <button class="btn btn-primary btn-lg" type="submit">@L["Acessar"]</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="tab-pane fade @(cpfActive ? "show active" : string.Empty)" id="cpf-pane"
+                                 role="tabpanel" aria-labelledby="cpf-tab" tabindex="0">
+                                <form method="post" asp-page-handler="Cpf" class="row g-3">
+                                    @if (cpfActive && !ViewData.ModelState.IsValid)
+                                    {
+                                        <div class="col-12">
+                                            <div class="alert alert-danger py-2" role="alert" asp-validation-summary="All"></div>
+                                        </div>
+                                    }
+                                    <div class="col-12">
+                                        <label asp-for="Cpf" class="form-label">@L["CPF"]</label>
+                                        <input asp-for="Cpf" class="form-control form-control-lg"
+                                               placeholder="000.000.000-00" inputmode="numeric" autocomplete="off" required />
+                                        <span asp-validation-for="Cpf" class="form-text text-danger"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="Code" class="form-label">@L["Código de acesso"]</label>
+                                        <input asp-for="Code" class="form-control form-control-lg"
+                                               placeholder="A1B2C3" autocomplete="off" required />
+                                        <span asp-validation-for="Code" class="form-text text-danger"></span>
+                                    </div>
+                                    <div class="col-12 d-grid mt-1">
+                                        <button class="btn btn-primary btn-lg" type="submit">@L["Acessar"]</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
-                        <div class="col-12 d-grid">
-                            <button class="btn btn-primary" type="submit">@L["Acessar"]</button>
-                        </div>
-                    </form>
+
+                        <p class="text-center mt-4 mb-0" style="font-size: var(--fs-sm)">
+                            <i class="bi bi-question-circle" style="color: var(--txt-muted)"></i>
+                            <a asp-page="/Help" class="portal-back-link ms-1">@L["Se não encontrar seu exame, toque em Ajuda."]</a>
+                        </p>
+                    </div>
                 </div>
+
             </div>
-        </article>
+        </div>
     </div>
 </section>
